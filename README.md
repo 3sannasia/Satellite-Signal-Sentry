@@ -57,11 +57,10 @@ This is a semester long project for IE 421 - High Frequency Trading Technology i
 ## Teammates
 Akash Sannasi
 - I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. My skills include being adept at Python, C++, SQL, React, and Typescript. 
-<br>
 
-    You can reach me at: <br>
-    Gmail: akashsan522@gmail.com <br>
-    LinkedIn: https://www.linkedin.com/in/-akash-s/
+You can reach me at: <br/>
+Gmail: akashsan522@gmail.com <br/>
+LinkedIn: https://www.linkedin.com/in/-akash-s/
 
 
 ## Badges
