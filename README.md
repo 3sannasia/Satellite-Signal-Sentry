@@ -1,7 +1,4 @@
 # group_04_project
-
-
-
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
@@ -55,7 +52,17 @@ Every project is different, so consider which of these sections apply to yours. 
 Choose a self-explaining name for your project.
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+This is a semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere.
+
+## Teammates
+Akash Sannasi
+- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. My skills include being adept at Python, C++, SQL, React, and Typescript. 
+<br>
+
+    You can reach me at: <br>
+    Gmail: akashsan522@gmail.com <br>
+    LinkedIn: https://www.linkedin.com/in/-akash-s/
+
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
