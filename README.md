@@ -62,6 +62,13 @@ You can reach me at: <br/>
 Gmail: akashsan522@gmail.com <br/>
 LinkedIn: https://www.linkedin.com/in/-akash-s/
 
+Ananya Agarwal
+- I am an undergraduate student studying Computer science at the University of Illinois at Urbana Champaign. I am going to graduate may 2024. I have 
+taken courses in database Management systems, Artificial Intellifence, statistics for Computer Science, System programming,Algorithms and data structures and IOT. I have experince working as a software development intern at Tesla and Ericsson. My skills include python, Java, CSS, C#, HTML, Javascript, C++.
+
+You can reach me at: <br/>
+Linkedin : https://www.linkedin.com/in/ananya-agarwal-407196205/
+
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
