@@ -77,6 +77,12 @@ You can reach me at: <br/>
 Email : hghai2@illinois.edu <br/>
 LinkedIn: https://www.linkedin.com/in/harshda-ghai-3853b3187 
 
+Vashishth
+- I'm an undergrad student at the University of Illinois Urbana-Champaign, graduating in May 2024. I have taken courses like Intro. to Algorithms and models of computations, System Programming, Artificial Intelligence. I have worked for NASA Lunabotics Competition where I helped with automation and GUI interface for controls. My skills include Python, Java, C++, Ocaml. Following my interest in systems, I want to work in Cryptography, Architecture and Math.
+
+You can reach me at: <br/>
+Email : vgosw2@illinois.edu <br/>
+LinkedIn: https://www.linkedin.com/in/vashishth8/ 
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
