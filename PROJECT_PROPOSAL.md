@@ -66,7 +66,6 @@ Maybe in the future, we would require ->
 
 * **GNSS antennas and Mounting Hardware** : To ensure that the GNSS receivers obtain strong satellite signals, we may require antennas and mounting hardware 
 * **Cooling Systems (Fans for PIs)** : Based on the hardware’s heat generation, we may require cooling systems, such as a fan for the raspberry pi devices, to prevent overheating.
-* 
 
 <h3>CI/CD </h3>
 
@@ -278,7 +277,7 @@ Future Goals :
 ## Team Members
 
 * Akash Sannasi: Expected graduation December 2024 with Bachelor's in CS + ECON
-*
+* Vashishth Goswami: Expected graduation May 2024 with Bachelors in CS
 *
 *
 
