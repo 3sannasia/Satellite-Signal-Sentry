@@ -1,7 +1,7 @@
 <h2>Project Proposal</h2>
 
 
-<h3>Goal - </h3>
+<h3>Goal</h3>
 
 
 This project aims to develop a comprehensive system for visualizing and managing multiple GNSS (Global Navigation Satellite System) receivers deployed across various locations globally. The system will utilize Raspberry Pi-based receivers to capture and upload data to a centralized database/webserver. An interactive web application will be created to provide a real-time dashboard displaying information about each receiver. The goal is to facilitate the monitoring and management of a globally distributed set of GNSS receivers from a single web-based interface with emphasis on researching satellite combos and GNSS constellation latencies.
@@ -18,15 +18,15 @@ The primary objectives of this project are as follows:
 * Enable configuration of GNSS receivers via custom u-blox commands, facilitating remote management.
 * Provide sensor fusion to integrate and visualize all relevant data in a 3D environment.
 
-<h3>High Level Description - </h3>
+<h3>High Level Description</h3>
 
 
 We aim to weave a web of synchronized GNSS receivers, scattered globally, into a coherent, real-time monitoring system. At the core of this ambitious project are Raspberry Pi devices, each equipped with a GNSS receiver, operating as data hubs by gathering satellite signals and transmitting the collated information to a centralized database. This vast pool of data finds its voice through an interactive web-based dashboard, which paints a 3D visual representation of the real-time movements and metrics of the satellites. Users not only get a panoramic view of the GNSS constellation latencies and satellite combinations but can also dive deep into data subsets, modify configurations, and even incorporate supplementary data like local weather conditions. Simplifying the intricate dance of satellites and receivers, this system aims to be the go-to platform for GNSS research and monitoring.
 
-<h3>Technologies/Libraries - </h3>
+<h3>Technologies/Libraries</h3>
 
 
-    **Backend Frameworks & Technologies:**
+#### Backend Frameworks & Technologies:
 
 
 
@@ -35,7 +35,7 @@ We aim to weave a web of synchronized GNSS receivers, scattered globally, into a
     * [https://realpython.com/python-mysql/](https://realpython.com/python-mysql/)
 * **Web Server Platforms (e.g., Node.js):** To serve the web application and interface with the database. 
 
-    **Frontend Toolkit:**
+#### Frontend Toolkit:
 
 * **HTML, CSS, and JavaScript:** The classic trio forms the foundation of our interactive web dashboard.
 * **CesiumJS:** A robust JavaScript library tailored for creating immersive 3D globes and maps, perfect for visualizing satellite trajectories.
@@ -51,7 +51,7 @@ We aim to weave a web of synchronized GNSS receivers, scattered globally, into a
 * **Python Libraries (e.g., Pandas, NumPy):**  For data processing and analysis.
 * **Sensor Fusion Techniques:** To integrate and visualize all relevant data in the 3D environment.
 
-<h3>Hardware - </h3>
+<h3>Hardware</h3>
 
 
 
@@ -68,7 +68,7 @@ Maybe in the future, we would require ->
 * **Cooling Systems (Fans for PIs)** : Based on the hardware’s heat generation, we may require cooling systems, such as a fan for the raspberry pi devices, to prevent overheating.
 * 
 
-<h3>CI/CD - </h3>
+<h3>CI/CD </h3>
 
 
 **Vagrant for Development Environments:**
@@ -120,19 +120,17 @@ Maybe in the future, we would require ->
 * PyTest for script testing of taking data from the raspberry pi’s and storing it in the MySQL database
 * Jest is a well known javascript testing library
 
-<h3>User Interface - Harshda</h3>
+<h3>User Interface</h3>
 
 
-**Technologies - **
-
-
+#### Technologies
 
 * HTML 
 * CSS
 * Javascript 
 * CesiumJS (to create 3D globes and maps)
 
-**User Interactions - **
+#### User Interactions
 
 
 
@@ -142,7 +140,7 @@ Maybe in the future, we would require ->
 * **Displaying Additional Data** : When the user would click on specific elements on the map, relevant information (such as - info about satellite, info about receiver, maybe even weather conditions etc) would be displayed in the form of a pop up window. 
 * **Configuration** : The user would also be able to send inputs and configuration settings to the devices. This would be in the form of buttons or text user inputs 
 
-<h3>Bare Minimum Target - Akash</h3>
+<h3>Bare Minimum Target</h3>
 
 
 
@@ -154,7 +152,7 @@ Maybe in the future, we would require ->
 * Being able to make pis have a static location after 10 seconds (average locations) then turn off the location just for timestamp
 * Location of the used satellites above earth in our visualization
 
-<h3>Expected Completion - Akash</h3>
+<h3>Expected Completion</h3>
 
 
 
@@ -178,7 +176,7 @@ Maybe in the future, we would require ->
     * After location is determined and the constant location-determining is turned off
 * Determine whether latency is decreased on new or old satellites (requires research/testing)
 
-<h3>Stretch/Reach Goals - Akash</h3>
+<h3>Stretch/Reach Goals</h3>
 
 
 
@@ -210,7 +208,7 @@ Below are double stretch goals:
 
 
 
-* **Week 1 - 10/30 - make own branches**
+* **Week 1 - 10/30**
     * Setup MySQL
     * Connecting pis
         * Figure out how we want to send data
@@ -254,7 +252,7 @@ Below are double stretch goals:
 
 * GPS chips, ideally 4
 
-<h3>Final Deliverables - Harshda</h3>
+<h3>Final Deliverables</h3>
 
 
 
@@ -275,3 +273,13 @@ Future Goals :
 
 
 * Develop an Algorithm : come up with an algorithm that automatically adjusts the configuration to allow users’ systems to achieve a certain threshold of performance or above. Or to provide users with the best performance based on certain parameters and conditions?
+
+
+## Team Members
+
+* Akash Sannasi: Expected graduation December 2024 with Bachelor's in CS + ECON
+*
+*
+*
+
+
