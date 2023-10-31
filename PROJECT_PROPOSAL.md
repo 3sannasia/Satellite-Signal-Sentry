@@ -263,8 +263,8 @@ Below are double stretch goals:
     * Ex: switching constellations or trying to use one satellite vs. 4
 * Design document (diagrams of how the end project works)
 * making open source access on a website by the end of this semester (stretch goal)
-* **Detailed Documentation : **A detailed document/research paper explaining the system/project guidelines, detailed technical documentation, diagrams/mockups describing how the end model/project works, and guidelines for potential future development or maintenance.
-* **Testing Reports and Results **: Reports summarizing the testing conducted on the system. This report would potentially include - methodology of testing the project, results of the application’s performance, user feedback, and any issues/limitations identified.
+* **Detailed Documentation** : A detailed document/research paper explaining the system/project guidelines, detailed technical documentation, diagrams/mockups describing how the end model/project works, and guidelines for potential future development or maintenance.
+* **Testing Reports and Results**: Reports summarizing the testing conducted on the system. This report would potentially include - methodology of testing the project, results of the application’s performance, user feedback, and any issues/limitations identified.
 * **Interactive 3D web application** : a web application capable of visualizing the position and telemetry data of GNSS receivers and satellites.
 
 Future Goals : 
