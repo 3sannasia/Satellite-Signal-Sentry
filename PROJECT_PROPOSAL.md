@@ -1,4 +1,4 @@
-<h2>Project Proposal</h2>
+<h1>Project Proposal</h1>
 
 
 <h3>Goal</h3>
