@@ -278,7 +278,7 @@ Future Goals :
 
 * Akash Sannasi: Expected graduation December 2024 with Bachelor's in CS + ECON
 * Vashishth Goswami: Expected graduation May 2024 with Bachelors in CS
-*
-*
+* Ananya Agarwal: Expected graduation May 2024 with Bachelors in CS
+* Harshda Ghai: Expected graduation May 2024 with Bachelors in CS
 
 
