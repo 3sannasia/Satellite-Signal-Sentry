@@ -5,3 +5,4 @@
 
 - npm install resium
 - npm install --save-dev --save-exact prettier
+- npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion

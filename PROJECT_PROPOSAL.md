@@ -27,10 +27,12 @@ We aim to weave a web of synchronized GNSS receivers, scattered globally, into a
   - [https://realpython.com/python-mysql/](https://realpython.com/python-mysql/)
 - **Frontend Platforms (e.g., React, Typescript):** To serve the web application and interface with the database and cesium.
 - **Data Transfer (e.g. NATS):** To send data from the pi's to the frontend using TCP (lightweight and low-latency)
+- **GPSD and U-Blox:** To get satellite, time, and latency data from the gps chip and configure the gps
 
 #### Frontend Toolkit:
 
 - **HTML, CSS, and JavaScript:** The classic trio forms the foundation of our interactive web dashboard.
+- **ChakraUI, React:** User interface libraries for styling
 - **CesiumJS:** A robust JavaScript library tailored for creating immersive 3D globes and maps, perfect for visualizing satellite trajectories.
 - **Resium:** A superset of the CesiumJS Javascript library tailored for easier use with React frontends.
 
