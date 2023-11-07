@@ -1,0 +1,1 @@
+# For switching constellations and doing calulations on the stored db data
