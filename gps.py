@@ -1,9 +1,9 @@
-import serial
+from serial import Serial
 import pynmea2
 
 # Configure the serial connection settings
-port = "/dev/ttyAMA0"
-ser = serial.Serial(port, baudrate=9600, timeout=0.5)
+port = "/dev/ttyS0"
+ser = Serial(port, baudrate=9600, timeout=0.5)
 
 while True:
     try:
@@ -16,7 +16,7 @@ while True:
             gps = f"Latitude={lat} and Longitude={lng}"
             print(gps)
 
-    except serial.SerialException as e:
+    except Serial.SerialException as e:
         print(f"Error reading from the serial port: {e}")
     except pynmea2.ParseError as e:
         print(f"Error parsing NMEA sentence: {e}")

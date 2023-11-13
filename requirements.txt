@@ -1,0 +1,4 @@
+pyserial
+pynmea2
+asyncio-nats-client
+nats-py
