@@ -1,5 +1,6 @@
 import asyncio
 import nats
+import json
 
 async def main():
     async def disconnected_cb():
@@ -24,11 +25,13 @@ async def main():
 
     async def handler(msg):
         print(f'Received a message on {msg.subject} {msg.reply}: {msg.data}')
+        location_data = json.loads(msg.data.decode())
+        print(location_data)
         await msg.respond(b'OK')
 
     sub = await nc.subscribe('location.please', cb=handler)
 
-    resp = await nc.request('location.please', b'help')
+    resp = await nc.request('location.please', json.dumps({'lat': 123, 'lon': 456}).encode(), timeout=1)
     print('Response:', resp)
 
     await nc.close()
