@@ -1,5 +1,7 @@
 import gpsd
 import time
+import psutil
+from gpiozero import CPUTemperature
 
 def get_gps_info():
     # Connect to the local GPSD service (assuming it's running on localhost)
@@ -18,6 +20,9 @@ def get_gps_info():
     print("Altitude:", packet.alt) #requires mode >=3
     print("Mode: " + str(packet.mode))
     print("Satellites Seen: " + str(packet.sats))  
+    print(CPUTemperature().temperature, "Celsius")
+    print(psutil.cpu_freq().current, "Hz")
+    
  
 
 if __name__ == "__main__":
