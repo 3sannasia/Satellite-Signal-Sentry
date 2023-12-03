@@ -1,1 +1,4 @@
 gpsd-py3
+psutil
+gpiozero
+pynmea2
