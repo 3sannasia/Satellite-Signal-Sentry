@@ -1,4 +1,4 @@
-gpsd-py3
+gps
 psutil
 gpiozero
 pynmea2

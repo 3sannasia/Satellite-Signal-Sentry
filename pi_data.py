@@ -19,17 +19,7 @@ def get_gps_info():
     print("Mode: " + str(packet.mode))
     print("Satellites Seen: " + str(packet.sats))  
     print("Satellites Seen (Valid): " + str(packet.sats_valid))  
-    
-    
-def get_cpu_frequency():
-    # Get CPU frequency in Hz
-    frequency = psutil.cpu_freq().current
-    return frequency
-
-def get_device_temperature():
-    # Get Raspberry Pi temperature in Celsius
-    cpu_temp = CPUTemperature().temperature
-    return cpu_temp
+    # I want TDOP
 
 
 
@@ -40,9 +30,7 @@ if __name__ == "__main__":
             time.sleep(2)  # Wait for 5 seconds before getting the next update
             
             get_gps_info()
-            print(str(get_cpu_frequency()) + " Hz")
-            print(str(get_device_temperature()) + " C")
-            print("\n---\n")
+            
     except KeyboardInterrupt:
         print("\nScript terminated by user.")
 

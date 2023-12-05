@@ -1,12 +1,14 @@
 import gps
 import time
+import psutil
+from gpiozero import CPUTemperature
+#https://gpsd.gitlab.io/gpsd/gpsd_json.html#_sky
+# Data attributes and descriptions in link above
 
 running = True
 
 def getPositionData(gps):
-    nx = gpsd.next()
-    print(nx['class'])
-    # import pdb; pdb.set_trace()
+    nx = gps.next()
     
     if nx['class'] == 'TPV':
         if hasattr(nx, 'time'):
@@ -17,41 +19,35 @@ def getPositionData(gps):
             print("Latitude: ", nx.lat)
         if hasattr(nx, 'alt'):
             print("Altitude: ", nx.alt, 'm')
-        if hasattr(nx, 'speed'):
-            print("Speed: ", nx.speed, 'm/s')
-        if hasattr(nx, 'climb'):
-            print("Climb: ", nx.climb, 'm/s')
-        if hasattr(nx, 'track'):
-            print("Track: ", nx.track, 'degrees')
         if hasattr(nx, 'mode'):
             print("Mode: ", nx.mode)
+            
+   
     if nx['class'] == 'SKY':
         if hasattr(nx, 'satellites'):
-            print("Satellites: ", nx.satellites)
-        if hasattr(nx, 'satellites_visible'):
-            print("\n working \n")
-            print("Satellites Visible: ", nx.satellites_visible)
-        if hasattr(nx, 'hdop'):
-            print("HDOP: ", nx.hdop)
-        if hasattr(nx, 'vdop'):
-            print("VDOP: ", nx.vdop)
-        if hasattr(nx, 'pdop'):
-            print("PDOP: ", nx.pdop)
-        if hasattr(nx, 'gdop'):
-            print("GDOP: ", nx.gdop)
-        if hasattr(nx, 'tdop'):
+            for satellite_info in nx.satellites:
+                print("Satellite: ", satellite_info)
+                 
+        if hasattr(nx, 'tdop'): #time dilution based on satellite position
             print("TDOP: ", nx.tdop)
-        if hasattr(nx, 'mode'):
-            print("Mode: ", nx.mode)
-    # if nx['class'] == 'ATT':
-    #     if hasattr(nx, 'heading'):
-    #         print("Heading: ", nx.heading)
-    #     if hasattr(nx, 'mag_st'):
-    #         print("Magnetic Variation: ", nx.mag_st)
-    #     if hasattr(nx, 'pitch'):
-    #         print("Pitch: ", nx.pitch)
-    #     if hasattr(nx, 'yaw'):
-    #         print("Yaw: ", nx.yaw)
+        if hasattr(nx, 'nSat'):
+            print("Satellites Seen:", nx.nSat)
+        if hasattr(nx, 'uSat'):
+            print("Satellites Used:", nx.uSat)
+        
+    
+    
+def get_cpu_frequency():
+    # Get CPU frequency in Hz
+    frequency = psutil.cpu_freq().current
+    return frequency
+
+def get_device_temperature():
+    # Get Raspberry Pi temperature in Celsius
+    cpu_temp = CPUTemperature().temperature
+    return cpu_temp
+
+        
             
 
 
@@ -61,7 +57,10 @@ try:
     print("Application started!")
     while running:
         getPositionData(gpsd)
-        time.sleep(1)
+        print(str(get_cpu_frequency()) + " Hz")
+        print(str(get_device_temperature()) + " C")
+        print("\n---\n")
+        time.sleep(2)
 except KeyboardInterrupt:
     running = False
     print("Applications closed!")
