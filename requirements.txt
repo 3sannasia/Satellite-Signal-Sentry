@@ -2,3 +2,5 @@ gps
 psutil
 gpiozero
 pynmea2
+mysql-connector-python
+sqlite3
