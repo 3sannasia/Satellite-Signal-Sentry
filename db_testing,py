@@ -21,7 +21,11 @@ drop_device_table_query = """
 DROP TABLE IF EXISTS connected_devices
 """
 
-# Define the SQL query to create a table
+drop_gps_table_query = """
+DROP TABLE IF EXISTS gps_data
+"""
+
+#SQL query to create a table
 create_gps_table_query = """
 CREATE TABLE IF NOT EXISTS gps_data (
     time TEXT,
@@ -32,11 +36,15 @@ CREATE TABLE IF NOT EXISTS gps_data (
     nSat INTEGER,
     uSat INTEGER,
     TDOP REAL,
-    satellites JSON
+    satellites JSON,
+    cpu_temp REAL,
+    cpu_freq REAL
 )
 """
 
 cursor.execute(drop_device_table_query)
+cursor.execute(drop_gps_table_query)
+
 cursor.execute(create_device_table_query)
 cursor.execute(create_gps_table_query)
 
