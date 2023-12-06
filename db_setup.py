@@ -42,6 +42,7 @@ DROP TABLE IF EXISTS gps_data
 #SQL query to create a table
 create_gps_table_query = """
 CREATE TABLE IF NOT EXISTS gps_data (
+    uuid TEXT,
     time TEXT,
     longitude REAL,
     latitude REAL,
