@@ -17,8 +17,22 @@ CREATE TABLE IF NOT EXISTS connected_devices (
     datetime DATETIME
 )
 """
+
+# Define the SQL query to create a table
+create_device_history_query = """
+CREATE TABLE IF NOT EXISTS devices_history (
+    uuid TEXT PRIMARY KEY,
+    device_name TEXT,
+    datetime DATETIME
+)
+"""
+
 drop_device_table_query = """
 DROP TABLE IF EXISTS connected_devices
+"""
+
+drop_device_history_query = """
+DROP TABLE IF EXISTS devices_history
 """
 
 drop_gps_table_query = """
@@ -43,10 +57,12 @@ CREATE TABLE IF NOT EXISTS gps_data (
 """
 
 cursor.execute(drop_device_table_query)
+cursor.execute(drop_device_history_query)
 cursor.execute(drop_gps_table_query)
 
 cursor.execute(create_device_table_query)
 cursor.execute(create_gps_table_query)
+cursor.execute(create_device_history_query)
 
 # Commit the changes to the database
 connection.commit()

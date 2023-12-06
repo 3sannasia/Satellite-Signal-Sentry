@@ -32,7 +32,10 @@ def register_to_database():
         'datetime': str(datetime.datetime.now())
     }
     register_insert_query = "INSERT INTO connected_devices (uuid, device_name, datetime) VALUES (?, ?, ?)"
+    history_insert_query = "INSERT INTO devices_history (uuid, device_name, datetime) VALUES (?, ?, ?)"
     cursor.execute(register_insert_query, (device_json['uuid'], device_json['device_name'], device_json['datetime']))
+    cursor.execute(history_insert_query, (device_json['uuid'], device_json['device_name'], device_json['datetime']))
+    
     connection.commit()
     
     print("Device registered to database!")
