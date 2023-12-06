@@ -7,6 +7,7 @@ import sqlite3
 import uuid
 import datetime
 import json
+import platform
 
 #https://gpsd.gitlab.io/gpsd/gpsd_json.html#_sky
 # Data attributes and descriptions in link above
@@ -27,11 +28,14 @@ cursor = connection.cursor()
 def register_to_database():
     device_json = {
         'uuid': str(uuid),
-        'device_name': 'Raspberry Pi 4',
+        'device_name': platform.uname().node + ": " + platform.machine(),
         'datetime': str(datetime.datetime.now())
     }
     register_insert_query = "INSERT INTO connected_devices (uuid, device_name, datetime) VALUES (?, ?, ?)"
+    history_insert_query = "INSERT INTO devices_history (uuid, device_name, datetime) VALUES (?, ?, ?)"
     cursor.execute(register_insert_query, (device_json['uuid'], device_json['device_name'], device_json['datetime']))
+    cursor.execute(history_insert_query, (device_json['uuid'], device_json['device_name'], device_json['datetime']))
+    
     connection.commit()
     
     print("Device registered to database!")
@@ -100,7 +104,8 @@ def get_TPV_SKY_device_data(gps):
         if hasattr(nx2, 'uSat'):
             uSat = nx2.uSat
             # print("Satellites Used:", nx2.uSat)
-    insert_GPS_data(time, longitude, latitude, altitude, mode, tdop, nSat, uSat, json.dumps(test_sat), get_device_temperature(), get_cpu_frequency())
+    global uuid
+    insert_GPS_data(uuid, time, longitude, latitude, altitude, mode, tdop, nSat, uSat, json.dumps(test_sat), get_device_temperature(), get_cpu_frequency())
  
 
 def get_cpu_frequency():
@@ -114,8 +119,9 @@ def get_device_temperature():
     return cpu_temp
 
 
-def insert_GPS_data(time, longitude, latitude, altitude, mode, tdop, nSat, uSat, satellites, cpu_temp, cpu_freq):
+def insert_GPS_data(uuid, time, longitude, latitude, altitude, mode, tdop, nSat, uSat, satellites, cpu_temp, cpu_freq):
     gps_json = {
+        'uuid': uuid,
         'time': time,
         'longitude': longitude,
         'latitude': latitude,
@@ -128,8 +134,8 @@ def insert_GPS_data(time, longitude, latitude, altitude, mode, tdop, nSat, uSat,
         'cpu_temp': cpu_temp,
         'cpu_freq': cpu_freq
     }
-    gps_insert_query = "INSERT INTO gps_data (time, longitude, latitude, altitude, mode, nSat, uSat, TDOP, satellites, cpu_temp, cpu_freq) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    cursor.execute(gps_insert_query, (gps_json['time'], gps_json['longitude'], gps_json['latitude'], gps_json['altitude'], gps_json['mode'], gps_json['nSat'], gps_json['uSat'], gps_json['TDOP'], gps_json['satellites'], gps_json['cpu_temp'], gps_json['cpu_freq']))
+    gps_insert_query = "INSERT INTO gps_data (uuid, time, longitude, latitude, altitude, mode, nSat, uSat, TDOP, satellites, cpu_temp, cpu_freq) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    cursor.execute(gps_insert_query, (gps_json['uuid'], gps_json['time'], gps_json['longitude'], gps_json['latitude'], gps_json['altitude'], gps_json['mode'], gps_json['nSat'], gps_json['uSat'], gps_json['TDOP'], gps_json['satellites'], gps_json['cpu_temp'], gps_json['cpu_freq']))
     connection.commit()
     print("\nGPS data inserted to database!")
     
@@ -177,6 +183,9 @@ def print_TPV_SKY_data(gps):
             
     print(str(get_cpu_frequency()) + " Hz")
     print(str(get_device_temperature()) + " C")
+    
+    print("\n-----------------------------------------------------\n")
+    
 
 
 try:
@@ -185,12 +194,10 @@ try:
     while running:
         print_TPV_SKY_data(gpsd)
         get_TPV_SKY_device_data(gpsd)
-
-        print("\n-----------------------------------------------------\n")
         time.sleep(2)
 except KeyboardInterrupt:
     running = False
     print('\n')
-    unregister_from_database()
+    # unregister_from_database()
     
     print("GPS closed!")
