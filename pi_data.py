@@ -7,6 +7,7 @@ import sqlite3
 import uuid
 import datetime
 import json
+import platform
 
 #https://gpsd.gitlab.io/gpsd/gpsd_json.html#_sky
 # Data attributes and descriptions in link above
@@ -27,7 +28,7 @@ cursor = connection.cursor()
 def register_to_database():
     device_json = {
         'uuid': str(uuid),
-        'device_name': 'Raspberry Pi 4',
+        'device_name': platform.uname().node + ": " + platform.machine(),
         'datetime': str(datetime.datetime.now())
     }
     register_insert_query = "INSERT INTO connected_devices (uuid, device_name, datetime) VALUES (?, ?, ?)"
@@ -177,6 +178,9 @@ def print_TPV_SKY_data(gps):
             
     print(str(get_cpu_frequency()) + " Hz")
     print(str(get_device_temperature()) + " C")
+    
+    print("\n-----------------------------------------------------\n")
+    
 
 
 try:
@@ -185,8 +189,6 @@ try:
     while running:
         print_TPV_SKY_data(gpsd)
         get_TPV_SKY_device_data(gpsd)
-
-        print("\n-----------------------------------------------------\n")
         time.sleep(2)
 except KeyboardInterrupt:
     running = False

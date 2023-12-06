@@ -11,7 +11,7 @@ cursor = connection.cursor()
 
 @app.get("/")
 def read_root():
-    return {"API": "See swagger docs at /docs"}
+    return {"message": "See swagger docs at /docs"}
 
 
 # Route to send latitude, location, and altitude data
@@ -36,6 +36,3 @@ def get_satellite_data(uuid: str):
     # ...
     return {"message": f"Satellite data for UUID: {uuid}"}
 
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", port=5000, log_level="info")
