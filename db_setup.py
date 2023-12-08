@@ -1,10 +1,22 @@
-import sqlite3
+import mysql.connector
+from dotenv import load_dotenv
+import os
 
-# Replace this with the path to your SQLite database file
-db_file = "gps_test.db"
 
-# Establish a connection to the SQLite database
-connection = sqlite3.connect(db_file)
+load_dotenv()
+# Replace these variables with your MySQL connection details
+mysql_user = os.getenv("DB_USER")
+mysql_password = os.getenv("DB_PASSWORD")
+mysql_host = os.getenv("DB_HOST")
+mysql_database = os.getenv("DB_NAME")
+
+# Establish a connection to the MySQL database
+connection = mysql.connector.connect(
+    user=mysql_user,
+    password=mysql_password,
+    host=mysql_host,
+    database=mysql_database
+)
 
 # Create a cursor object to interact with the database
 cursor = connection.cursor()
@@ -12,8 +24,8 @@ cursor = connection.cursor()
 # Define the SQL query to create a table
 create_device_table_query = """
 CREATE TABLE IF NOT EXISTS connected_devices (
-    uuid TEXT PRIMARY KEY,
-    device_name TEXT,
+    uuid VARCHAR(255) PRIMARY KEY,
+    device_name VARCHAR(255),
     datetime DATETIME
 )
 """
@@ -21,8 +33,8 @@ CREATE TABLE IF NOT EXISTS connected_devices (
 # Define the SQL query to create a table
 create_device_history_query = """
 CREATE TABLE IF NOT EXISTS devices_history (
-    uuid TEXT PRIMARY KEY,
-    device_name TEXT,
+    uuid VARCHAR(255) PRIMARY KEY,
+    device_name VARCHAR(255),
     datetime DATETIME
 )
 """
@@ -39,21 +51,21 @@ drop_gps_table_query = """
 DROP TABLE IF EXISTS gps_data
 """
 
-#SQL query to create a table
+# SQL query to create a table
 create_gps_table_query = """
 CREATE TABLE IF NOT EXISTS gps_data (
-    uuid TEXT,
-    time TEXT,
-    longitude REAL,
-    latitude REAL,
-    altitude REAL,
-    mode TEXT,
+    uuid VARCHAR(255),
+    time VARCHAR(255),
+    longitude DOUBLE,
+    latitude DOUBLE,
+    altitude DOUBLE,
+    mode VARCHAR(255),
     nSat INTEGER,
     uSat INTEGER,
-    TDOP REAL,
+    TDOP DOUBLE,
     satellites JSON,
-    cpu_temp REAL,
-    cpu_freq REAL
+    cpu_temp DOUBLE,
+    cpu_freq DOUBLE
 )
 """
 

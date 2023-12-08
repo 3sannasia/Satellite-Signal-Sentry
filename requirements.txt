@@ -6,3 +6,4 @@ mysql-connector-python
 sqlite3
 fastapi
 uvicorn
+python-dotenv
