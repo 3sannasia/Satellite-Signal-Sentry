@@ -8,9 +8,14 @@ import uuid
 import datetime
 import json
 import platform
+from dotenv import load_dotenv
+import os
 
 #https://gpsd.gitlab.io/gpsd/gpsd_json.html#_sky
 # Data attributes and descriptions in link above
+
+load_dotenv()
+
 
 gpsd = gps.gps(mode=gps.WATCH_ENABLE|gps.WATCH_NEWSTYLE)
 
@@ -19,20 +24,30 @@ uuid = str(uuid.uuid4())
 print("UUID: " + uuid)
 
 
-# Establish a connection to the SQLite database
-db_file = "gps_test.db"
-connection = sqlite3.connect(db_file)
+mysql_user = os.getenv("DB_USER")
+mysql_password = os.getenv("DB_PASSWORD")
+mysql_host = os.getenv("DB_HOST")
+mysql_database = os.getenv("DB_NAME")
+
+# Establish a connection to the MySQL database
+connection = mysql.connector.connect(
+    user=mysql_user,
+    password=mysql_password,
+    host=mysql_host,
+    database=mysql_database
+)
 cursor = connection.cursor()
 
 
 def register_to_database():
+    global cursor
     device_json = {
         'uuid': str(uuid),
         'device_name': platform.uname().node + ": " + platform.machine(),
         'datetime': str(datetime.datetime.now())
     }
-    register_insert_query = "INSERT INTO connected_devices (uuid, device_name, datetime) VALUES (?, ?, ?)"
-    history_insert_query = "INSERT INTO devices_history (uuid, device_name, datetime) VALUES (?, ?, ?)"
+    register_insert_query = "INSERT INTO connected_devices (uuid, device_name, datetime) VALUES (%s, %s, %s)"
+    history_insert_query = "INSERT INTO devices_history (uuid, device_name, datetime) VALUES (%s, %s, %s)"
     cursor.execute(register_insert_query, (device_json['uuid'], device_json['device_name'], device_json['datetime']))
     cursor.execute(history_insert_query, (device_json['uuid'], device_json['device_name'], device_json['datetime']))
     
@@ -42,7 +57,10 @@ def register_to_database():
     
     
 def unregister_from_database():
-    unregister_query = "DELETE FROM connected_devices WHERE uuid = ?"
+    global cursor
+    
+    
+    unregister_query = "DELETE FROM connected_devices WHERE uuid = %s"
     cursor.execute(unregister_query, (uuid,))
     connection.commit()
     
@@ -120,6 +138,8 @@ def get_device_temperature():
 
 
 def insert_GPS_data(uuid, time, longitude, latitude, altitude, mode, tdop, nSat, uSat, satellites, cpu_temp, cpu_freq):
+    global cursor
+    
     gps_json = {
         'uuid': uuid,
         'time': time,
@@ -134,7 +154,7 @@ def insert_GPS_data(uuid, time, longitude, latitude, altitude, mode, tdop, nSat,
         'cpu_temp': cpu_temp,
         'cpu_freq': cpu_freq
     }
-    gps_insert_query = "INSERT INTO gps_data (uuid, time, longitude, latitude, altitude, mode, nSat, uSat, TDOP, satellites, cpu_temp, cpu_freq) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    gps_insert_query = "INSERT INTO gps_data (uuid, time, longitude, latitude, altitude, mode, nSat, uSat, TDOP, satellites, cpu_temp, cpu_freq) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     cursor.execute(gps_insert_query, (gps_json['uuid'], gps_json['time'], gps_json['longitude'], gps_json['latitude'], gps_json['altitude'], gps_json['mode'], gps_json['nSat'], gps_json['uSat'], gps_json['TDOP'], gps_json['satellites'], gps_json['cpu_temp'], gps_json['cpu_freq']))
     connection.commit()
     print("\nGPS data inserted to database!")
