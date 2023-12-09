@@ -43,6 +43,68 @@
         czmlDataSource.load('orbit.czml');
         viewer.dataSources.add(czmlDataSource);
 
+
+//-----------------------------------------------------------
+    //     const button = document.createElement('button');
+    // button.textContent = 'Click me';
+    // button.addEventListener('click', () => {
+    //   // Perform actions on button click
+    //   alert('Button clicked!');
+    // });
+    // document.body.appendChild(button);
+
+
+
+     // Create Cesium viewer
+     //const viewer = new Cesium.Viewer('cesiumContainer');
+
+//Define a sample entity with a position and some properties
+const clickableEntity = viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(-75.1641667, 39.9522222),
+    label: {
+        text: 'Click me!',
+        show: true,
+        font: '14px sans-serif',
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        fillColor: Cesium.Color.YELLOW,
+        outlineColor: Cesium.Color.BLACK,
+        outlineWidth: 2,
+        pixelOffset: new Cesium.Cartesian2(0, -30), // Adjust the label position
+    },
+});
+
+// Add a click event listener to the entity
+clickableEntity.description = 'This is a clickable entity.';
+// clickableEntity.click = function (movement) {
+//     console.log('Entity clicked!', clickableEntity.description);
+// };
+
+// viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+//     var pickedObject = viewer.scene.pick(movement.endPosition);
+//     if (Cesium.defined(pickedObject) && pickedObject.id === clickableEntity) {
+//         console.log('Entity clicked!', clickableEntity.description);
+//     }
+// }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+    try {
+        // Use movement.position instead of movement.endPosition
+        var pickedObject = viewer.scene.pick(movement.position);
+
+        // Check if pickedObject is defined and has an 'id'
+        if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id) && pickedObject.id === clickableEntity) {
+            console.log('Entity clicked!', clickableEntity.description);
+        }
+    } catch (error) {
+        console.error('Error handling click event:', error);
+    }
+}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+
+
+
+
     </script>
 </body>
 </html>
