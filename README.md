@@ -13,7 +13,7 @@ This repository holds scripts to pull GNSS and satellite data and store it in a 
 
 
 ## Goal
-Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy. 
+Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy (TDOP) and satellite signal strength. Goal is also to figure out what is the ideal satellite combination depending on their respective positions using the TDOP and satellite signal strength metric.
 Show pic of working gps with satellites its using and their strengths
 
 ## Description
@@ -60,7 +60,7 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - Run Backend (api service + GNSS receiver data collection) 
     - run ```./run_gps_api.sh```
 - Run Frontend (3D Visualization)
-    - run ```TODO```
+    - run ```live server```
 
 ## Usage
 - Obtain device with a GNSS reciever with an active fix and running GPSD
@@ -85,6 +85,17 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - Run pytests
 - ```TODO```
 
+## Changes from Project Proposal
+- Initial plans of restricting GNSS and switch GNSS constellation automatically if massive spike in latency scrapped. This is because there is not an ideal way to measure latency other than using TDOP and satellite strength. We also realized the receiver automatically switches if necessary and ublox commands already exist to restrict GNSS constellations
+- Research on whether latency is improved on just one satellite connected vs. multiple are connected at a time scrapped because we didn't have a good way of measuring latency
+- Our focus changed to satellite signal strength and TDOP instead in regards to the importance of time in HFT
+- Left out NATS to simplify data transfer between the frontend and backend to FastAPI
+- Ublox already has a time mode for being able to make pis have a static location after 10 seconds (average locations) then turn off the location just for timestamp
+
+
+
+
+
 
 ## Support
 #### Installing gpsd
@@ -103,6 +114,7 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - https://pimylifeup.com/raspberry-pi-mysql/
 
 ## Roadmap for Future Ideas
+- Use tools like Prometheus, Grafana, or commercial monitoring solutions to gain insights into your system's health on the frontend
 - Implement ublox command sending from the UI and see satellite changes in real time
 - Time lapse slider to see satellite strength over time and when a device switches satellites
 - Add airplanes
@@ -113,9 +125,13 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - Command to restrict a certain constellation through the UI using ublox commands
 - local weather
 - User notifications when satellite signal strength or TDOP is unideal
+- Detect trucker GPS jamming and alert the user about latency issue
 
 
 ## Project status
 - Backend established
 - Frontend includes only all U.S. Satellites currently (31)
+- Displays currently connected devices
+
+
 
