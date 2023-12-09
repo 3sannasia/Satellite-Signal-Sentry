@@ -1,16 +1,27 @@
-# Immersive 3D Visualization: Unveiling the Mystique of GPS and the Satellites that Power them
+# Immersive 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them
 
-This repository holds scripts to pull gps and satellite data and store it in a datbabase for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many gps can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.
+This repository holds scripts to pull GNSS and satellite data and store it in a datbabase for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many GNSS receivers can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.
+
+
+### Components:
+- Backend
+    - MySQL
+    - FastAPI
+- Frontend
+    - CesiumJS
+    - ChartJS
+
 
 ## Goal
-Our goal is to show what your gps is connected to behind-the-scenes and how satellite position can affect time accuracy. 
+Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy. 
+Show pic of working gps with satellites its using and their strengths
 
 ## Description
 This is a semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere.
 
 ## Teammates
 Akash Sannasi
-- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and full-stack web applications using that data. My skills include being advanced at Python, C++, SQL, React, and Typescript. 
+- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and backend/full-stack applications using that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
 
 You can reach me at: <br/>
 Gmail: akashsan522@gmail.com <br/>
@@ -40,24 +51,71 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 
 
 ## Visuals
-
+- Add screenshots of final product
 
 ## Installation
-
+- Install Libraries: 
+    - ```pip3 install -r requirements.txt```
+    - ```TODO for frontend```
+- Run Backend (api service + GNSS receiver data collection) 
+    - run ```./run_gps_api.sh```
+- Run Frontend (3D Visualization)
+    - run ```TODO```
 
 ## Usage
+- Obtain device with a GNSS reciever with an active fix and running GPSD
+- On running the backend your device
+    - automatically registers itself to MySQL 
+    - uploads data to our MySQL instance
+- On shutting down the backend
+    - device unregisters from active devices table on MySQL
+    - device stays recorded in the connected_devices_history table
+- The CesiumJS frontend uses the data to populate the globe with device locations and satellites in real-time
+- ChartJS charts are displayed
+    - cpu temperatures,
+    - TDOP (time dilution of precision)
+    - cumulative satellite signal strength over time
+### Features - TODO Add Pictures
+1. 3D Visualization of gps locations on the Earth
+2. Satellites orbitting the Earth in real-time
+3. See what satellites your gps device is using
+4. See ChartJS graphs on clicking device
+
+### Testing
+- Run pytests
+- ```TODO```
 
 
 ## Support
-- Links 
+#### Installing gpsd
+- https://gpsd.gitlab.io/gpsd/installation.html
+
+#### Satellite data that can be read through NMEA 
+- https://gpsd.gitlab.io/gpsd/gpsd_json.html
+
+#### Accessing api swagger docs
+- visit the api url + /docs
+
+#### Python 3 parser for the UBX © protocol. UBX is a proprietary binary protocol implemented on u-blox ™ GNSS/GPS receiver modules.
+- https://github.com/semuconsulting/pyubx2
+
+#### Setting up pi MySQL instance
+- https://pimylifeup.com/raspberry-pi-mysql/
 
 ## Roadmap for Future Ideas
+- Implement ublox command sending from the UI and see satellite changes in real time
+- Time lapse slider to see satellite strength over time and when a device switches satellites
+- Add airplanes
+- Add radio waves
+- data centers
+- Adding testing for health data and to signal when a raspberry pi is down what to do
+- Correlate satellites with their country, year made, and etc…
+- Command to restrict a certain constellation through the UI using ublox commands
+- local weather
+- User notifications when satellite signal strength or TDOP is unideal
 
-
-## Contributing
-
-## License
-For open source projects, say how it is licensed.
 
 ## Project status
+- Backend established
+- Frontend includes only all U.S. Satellites currently (31)
 
