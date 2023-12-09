@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 app = FastAPI()
-
+# run with uvicorn gps_api:app --port 5002 --reload
 load_dotenv()
 
 # Replace these variables with your MySQL connection details
@@ -12,13 +12,15 @@ mysql_user = os.getenv("DB_USER")
 mysql_password = os.getenv("DB_PASSWORD")
 mysql_host = os.getenv("DB_HOST")
 mysql_database = os.getenv("DB_NAME")
+mysql_port = os.getenv("DB_PORT")
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
     user=mysql_user,
     password=mysql_password,
     host=mysql_host,
-    database=mysql_database
+    database=mysql_database,
+    port=mysql_port
 )
 cursor = connection.cursor()
 

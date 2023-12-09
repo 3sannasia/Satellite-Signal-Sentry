@@ -9,16 +9,16 @@ mysql_user = os.getenv("DB_USER")
 mysql_password = os.getenv("DB_PASSWORD")
 mysql_host = os.getenv("DB_HOST")
 mysql_database = os.getenv("DB_NAME")
+mysql_port = os.getenv("DB_PORT")
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
     user=mysql_user,
     password=mysql_password,
     host=mysql_host,
-    database=mysql_database
+    database=mysql_database,
+    port=mysql_port
 )
-
-# Create a cursor object to interact with the database
 cursor = connection.cursor()
 
 # Define the SQL query to create a table

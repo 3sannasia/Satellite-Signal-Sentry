@@ -24,17 +24,20 @@ uuid = str(uuid.uuid4())
 print("UUID: " + uuid)
 
 
+# Replace these variables with your MySQL connection details
 mysql_user = os.getenv("DB_USER")
 mysql_password = os.getenv("DB_PASSWORD")
 mysql_host = os.getenv("DB_HOST")
 mysql_database = os.getenv("DB_NAME")
+mysql_port = os.getenv("DB_PORT")
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
     user=mysql_user,
     password=mysql_password,
     host=mysql_host,
-    database=mysql_database
+    database=mysql_database,
+    port=mysql_port
 )
 cursor = connection.cursor()
 
@@ -218,6 +221,6 @@ try:
 except KeyboardInterrupt:
     running = False
     print('\n')
-    # unregister_from_database()
+    unregister_from_database()
     
     print("GPS closed!")
