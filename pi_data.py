@@ -14,7 +14,6 @@ import os
 #https://gpsd.gitlab.io/gpsd/gpsd_json.html#_sky
 # Data attributes and descriptions in link above
 
-load_dotenv()
 
 
 gpsd = gps.gps(mode=gps.WATCH_ENABLE|gps.WATCH_NEWSTYLE)
@@ -24,18 +23,23 @@ uuid = str(uuid.uuid4())
 print("UUID: " + uuid)
 
 
+load_dotenv()
+# Replace these variables with your MySQL connection details
 mysql_user = os.getenv("DB_USER")
 mysql_password = os.getenv("DB_PASSWORD")
 mysql_host = os.getenv("DB_HOST")
 mysql_database = os.getenv("DB_NAME")
+mysql_port = os.getenv("DB_PORT")
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
     user=mysql_user,
     password=mysql_password,
     host=mysql_host,
-    database=mysql_database
+    database=mysql_database,
+    # port = mysql_port
 )
+
 cursor = connection.cursor()
 
 
