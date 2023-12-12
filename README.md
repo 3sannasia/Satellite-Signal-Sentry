@@ -63,6 +63,7 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
     - run ```live server```
 
 ## Usage
+- Need a .env file with your mysql database credentials
 - Obtain device with a GNSS reciever with an active fix and running GPSD
 - On running the backend your device
     - automatically registers itself to MySQL 
