@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graphs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        canvas {
+            max-width: 800px; /* Adjust as needed */
+            margin: auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h1>GRAPHS</h1>
+</div>
+
+<div class="container">
+    <canvas id="cpuTempChart"></canvas>
+</div>
+<div class="container">
+    <canvas id="cpuFreqChart"></canvas>
+</div>
+
+<div class="container">
+    <canvas id="tdopChart"></canvas>
+</div>
+
+
+<script>
+    // Function to fetch data and plot the graph
+    async function fetchTempAndPlot() {
+        try {
+            const response = await fetch('cpu_temp.json'); // Adjust the path if necessary
+            const jsonData = await response.json();
+
+            // Process the data
+            const temps = jsonData.cpu_temps.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_temps.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: temps,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuTempChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting data:', error);
+        }
+    }
+
+
+    // this function is to use with the api routes
+    async function fetchTempAndPlot2(jsonData) {
+        try {
+            // Process the data
+            const temps = jsonData.cpu_temps.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_temps.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: temps,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuTempChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting data:', error);
+        }
+    }
+
+
+
+    async function fetchFreqAndPlot() {
+        try {
+            const response = await fetch('cpu_freq.json'); // Adjust the path if necessary
+            const jsonData = await response.json();
+
+            // Process the data
+            const freqs = jsonData.cpu_freqs.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_freqs.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Frequency',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: freqs,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuFreqChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting freq data:', error);
+        }
+    }
+
+    
+    // this function is to use with the api routes
+    async function fetchFreqAndPlot2(jsonData) {
+        try {
+            // Process the data
+            const freqs = jsonData.cpu_freqs.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_freqs.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Frequency',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: freqs,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuFreqChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting freq data:', error);
+        }
+    }
+
+
+    async function fetchTdopAndPlot() {
+        try {
+            const response = await fetch('tdop_history.json'); // Adjust the path if necessary
+            const jsonData = await response.json();
+
+            // Process the data
+            const tdop = jsonData.tdop_history.map(entry => entry[0]);
+            const timestamps = jsonData.tdop_history.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'TDOP History',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: tdop,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('tdopChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting tdop data:', error);
+        }
+    }
+
+    // this function is to use with the api routes
+    async function fetchTdopAndPlot2(jsonData) {
+        try {
+           // Process the data
+            const tdop = jsonData.tdop_history.map(entry => entry[0]);
+            const timestamps = jsonData.tdop_history.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'TDOP History',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: tdop,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('tdopChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting tdop data:', error);
+        }
+    }
+
+    //COMMENTED CODE TO USE WITH THE API ROUTES 
+
+    //Fetch the Temp data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchTempAndPlot2(data);
+    // })
+    // .catch(error => console.error('Unable to get TEMP items', error));
+
+    // //Fetch the Freq data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchFreqAndPlot2(data);
+    // })
+    // .catch(error => console.error('Unable to get FREQ items', error));
+
+
+    // //Fetch the TDOP data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchTdopAndPlot2(data);
+    // })
+    // .catch(error => console.error('Unable to get TDOP items', error));
+
+
+
+    // THIS IS FOR THE JSON DATA 
+    fetchTempAndPlot();
+    fetchFreqAndPlot();
+    fetchTdopAndPlot();
+</script>
+
+</body>
+</html>

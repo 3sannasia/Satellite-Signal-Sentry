@@ -5,6 +5,24 @@
     <title>CesiumJS Dynamic Earth Example</title>
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.67/Build/Cesium/Cesium.js"></script>
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.67/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+    <style>
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        
+        
+            </style>
 </head>
 <body>
     <div id="cesiumContainer" style="width: 100%; height: 100%;"></div>
@@ -29,71 +47,138 @@
             });
         });
 
-        // Define your CZML data here
-        // var czmlData = [
-        //     // ... Your CZML objects ...
-        // ];
 
-        // // Process the CZML data
-        // var czmlDataSource = new Cesium.CzmlDataSource();
-        // czmlDataSource.process(czmlData);
-        // viewer.dataSources.add(czmlDataSource);
+        var czmlDataSource_main = new Cesium.CzmlDataSource();
+        czmlDataSource_main.load('orbit.czml');
+        viewer.dataSources.add(czmlDataSource_main);
+        //viewer.dataSources.remove(czmlDataSource2);
 
-        var czmlDataSource = new Cesium.CzmlDataSource();
-        czmlDataSource.load('orbit.czml');
-        viewer.dataSources.add(czmlDataSource);
+     async function plot_devices() {
+        try {
+            const devices_response = await fetch('devices.json'); // Adjust the path if necessary
+            const devices_jsonData = await devices_response.json();
+
+            const locations_response = await fetch('locations.json'); // Adjust the path if necessary
+            const locations_jsonData = await locations_response.json();
+
+            //console.log(locations_jsonData);
+
+            const mergedData = devices_jsonData.devices.map((id, index) => {
+                return {
+                    id: id,
+                    longitude: locations_jsonData.location[index],
+                    latitude: locations_jsonData.location[index + 1]
+                    
+                };
+            });
+            //console.log(mergedData);
+
+            mergedData.forEach(device => {
+                viewer.entities.add({
+                    position: Cesium.Cartesian3.fromDegrees(device.longitude, device.latitude), // Slicing to get only longitude and latitude
+                    label: {
+                        text: device.id,
+                        show: true,
+                        font: '14px sans-serif',
+                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                        fillColor: Cesium.Color.YELLOW,
+                        outlineColor: Cesium.Color.BLACK,
+                        outlineWidth: 2,
+                        pixelOffset: new Cesium.Cartesian2(0, -30), // Adjust the label position
+                    },
+                    id: device.id,
+                    properties: {
+                        description: 'Device ID: ' + device.id
+                    }
+                });
+            });
 
 
-//-----------------------------------------------------------
-    //     const button = document.createElement('button');
-    // button.textContent = 'Click me';
-    // button.addEventListener('click', () => {
-    //   // Perform actions on button click
-    //   alert('Button clicked!');
+
+        } catch (error) {
+            console.error('Error fetching and plotting the device data:', error);
+
+        }
+
+
+     }
+
+     // THIS IS FOR THE API ROUTES 
+     async function plot_devices2(devices_jsonData, locations_jsonData) {
+        try {
+            const mergedData = devices_jsonData.devices.map((id, index) => {
+                return {
+                    id: id,
+                    longitude: locations_jsonData.location[index],
+                    latitude: locations_jsonData.location[index + 1]
+                    
+                };
+            });
+            //console.log(mergedData);
+
+            mergedData.forEach(device => {
+                viewer.entities.add({
+                    position: Cesium.Cartesian3.fromDegrees(device.longitude, device.latitude), // Slicing to get only longitude and latitude
+                    label: {
+                        text: device.id,
+                        show: true,
+                        font: '14px sans-serif',
+                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                        fillColor: Cesium.Color.YELLOW,
+                        outlineColor: Cesium.Color.BLACK,
+                        outlineWidth: 2,
+                        pixelOffset: new Cesium.Cartesian2(0, -30), // Adjust the label position
+                    },
+                    id: device.id,
+                    properties: {
+                        description: 'Device ID: ' + device.id
+                    }
+                });
+            });
+
+
+
+        } catch (error) {
+            console.error('Error fetching and plotting the device data:', error);
+
+        }
+
+
+     }
+
+
+     // THIS IS FOR THE API ROUTES 
+
+    //  Promise.all([
+    //     fetch('url1.json'), // Replace with your first URL
+    //     fetch('url2.json')  // Replace with your second URL
+    // ])
+    // .then(responses => Promise.all(responses.map(res => res.json())))
+    // .then(data => {
+    //     const [dataFromUrl1, dataFromUrl2] = data;
+    //     console.log('Data from URL 1:', dataFromUrl1);
+    //     console.log('Data from URL 2:', dataFromUrl2);
+    //     // Handle the data from both URLs
+    //     plot_devices2(dataFromUrl1, dataFromUrl2);
+    // })
+    // .catch(error => {
+    //     console.error('Error fetching data:', error);
     // });
-    // document.body.appendChild(button);
+
+    // THIS IS WITH THE JSON FILES 
+    plot_devices();
 
 
-
-     // Create Cesium viewer
-     //const viewer = new Cesium.Viewer('cesiumContainer');
-
-//Define a sample entity with a position and some properties
-const clickableEntity = viewer.entities.add({
-    position: Cesium.Cartesian3.fromDegrees(-75.1641667, 39.9522222),
-    label: {
-        text: 'Click me!',
-        show: true,
-        font: '14px sans-serif',
-        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-        fillColor: Cesium.Color.YELLOW,
-        outlineColor: Cesium.Color.BLACK,
-        outlineWidth: 2,
-        pixelOffset: new Cesium.Cartesian2(0, -30), // Adjust the label position
-    },
-});
-
-// Add a click event listener to the entity
-clickableEntity.description = 'This is a clickable entity.';
-// clickableEntity.click = function (movement) {
-//     console.log('Entity clicked!', clickableEntity.description);
-// };
-
-// viewer.screenSpaceEventHandler.setInputAction(function (movement) {
-//     var pickedObject = viewer.scene.pick(movement.endPosition);
-//     if (Cesium.defined(pickedObject) && pickedObject.id === clickableEntity) {
-//         console.log('Entity clicked!', clickableEntity.description);
-//     }
-// }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+    viewer.screenSpaceEventHandler.setInputAction(function (movement) {
     try {
-        // Use movement.position instead of movement.endPosition
         var pickedObject = viewer.scene.pick(movement.position);
+        if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id)) {
+            var entityId = pickedObject.id;
+            var entity = viewer.entities.getById(entityId);
 
-        // Check if pickedObject is defined and has an 'id'
-        if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id) && pickedObject.id === clickableEntity) {
-            console.log('Entity clicked!', clickableEntity.description);
+            if (entityId) {
+                window.location.href = 'new_page.html';
+            }
         }
     } catch (error) {
         console.error('Error handling click event:', error);
@@ -101,436 +186,157 @@ viewer.screenSpaceEventHandler.setInputAction(function (movement) {
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
 
+    async function toggleButtonText() {
+            var button = document.getElementById('toggleButton');
+            const satellites_response = await fetch('satellites_used.json'); // Adjust the path if necessary
+            const satellites_jsonData = await satellites_response.json();
+            //console.log(satellites_jsonData.prn_satellites_used_array);
+            var czmlDataSource = new Cesium.CzmlDataSource();
+            await czmlDataSource.load('orbit.czml');
+
+            let sat_list = []
 
 
 
-
-    </script>
-</body>
-</html>
-
-
+            satellites_jsonData.prn_satellites_used_array.forEach(function(sat) {
+                var final_sat = "PRN " + sat;
+                if (sat < 10) {
+                    var final_sat = "PRN 0" + sat;
 
 
+                }
+                console.log(final_sat);
+                //console.log(czmlDataSource);
 
+                czmlDataSource.entities.values.forEach(function(entity) {
+                    //console.log(entity);
+                    if (entity.id.includes(final_sat)) {
+                        //console.log(entity.id);
+                        sat_list.push(entity.id);
+                        entity.show = true;
+                    }
 
+                    //entity.show = false;
+                });
 
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>CesiumJS Example</title>
-    <script src="./node_modules/cesium/Build/Cesium/Cesium.js"></script>
-</head>
-<body>
-    <div id="cesiumContainer"></div>
-    <script>
-        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
-
-        // Your CesiumJS code goes here
-    </script>
-</body>
-</html> -->
-
-
-<!-- THE CODE BELOW DRAWS THE EARTH AND ALLOWS USERS TO ZOOM IN/OUT + MOVE AROUND -->
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>CesiumJS Dynamic Earth Example</title>
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.67/Build/Cesium/Cesium.js"></script>
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.67/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-</head>
-<body>
-    <div id="cesiumContainer" style="width: 100%; height: 100%;"></div>
-    <script>
-        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
-
-        var viewer = new Cesium.Viewer('cesiumContainer', {
-            // Enable lighting based on sun position
-            terrainProvider: Cesium.createWorldTerrain(),
-            shouldAnimate: true, // Enable animations
-        });
-
-        // Start off looking at Australia.
-        viewer.camera.setView({
-            destination: Cesium.Cartesian3.fromDegrees(133.7751, -25.2744, 10000000)
-        });
-
-        // Enable the home button to return to Australia view.
-        viewer.homeButton.viewModel.command.beforeExecute.addEventListener(function (e) {
-            e.cancel = true;
-            viewer.camera.flyTo({
-                destination: Cesium.Cartesian3.fromDegrees(133.7751, -25.2744, 10000000)
+                
+            //for the main for loop     
             });
-        });
 
-    </script>
-</body>
-</html>
+            console.log(sat_list);
+            czmlDataSource.entities.values.forEach(function(entity) {
+                if (sat_list.includes(entity.id)){
+                    //console.log("IN LIOST ", entity.id);
+                    entity.show = true;
+                } else {
+                    entity.show = false;
 
-
-
--->
-
-
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>GPS BIIR-2 (PRN 13) Orbit</title>
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Cesium.js"></script>
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <style>
-        #cesiumContainer {
-            width: 100%; height: 100%; position: absolute; top: 0; left: 0;
-        }
-    </style>
-</head>
-<body>
-<div id="cesiumContainer"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.1.3/satellite.min.js"></script>
-<script>
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
-
-    const viewer = new Cesium.Viewer('cesiumContainer', {
-        shouldAnimate: true
-    });
-
-    // TLE data for GPS BIIR-2 (PRN 13)
-    const tle1 = '1 24876U 97035A   23335.84468286  .00000049  00000+0  00000+0 0  9994';
-    const tle2 = '2 24876  55.6130 134.8857 0075345  53.6276 307.0533  2.00564853193331';
-
-    // Initialize a satellite record
-    const satrec = satellite.twoline2satrec(tle1, tle2);
-
-    // Compute the satellite's position for 1 day, with a step of 10 minutes
-    const positions = [];
-    for (let i = 0; i < 1440; i += 10) {
-        const date = new Date(new Date().getTime() + i * 60000);
-        const positionAndVelocity = satellite.propagate(satrec, date);
-        const positionEci = positionAndVelocity.position;
-        const gmst = satellite.gstime(date);
-        const positionGd = satellite.eciToGeodetic(positionEci, gmst);
-        const position = Cesium.Cartesian3.fromRadians(
-            positionGd.longitude,
-            positionGd.latitude,
-            positionGd.height * 1000
-        );
-        positions.push(position);
-    }
-
-    // Add the computed positions as a polyline to the viewer
-    viewer.entities.add({
-        polyline: {
-            positions: positions,
-            width: 2,
-            material: Cesium.Color.RED
-        }
-    });
-
-    // Adjust the viewer to see the whole trajectory
-    viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883, 10000000)
-    });
-</script>
-</body>
-</html> -->
+                }
 
 
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>GPS BIIR-2 (PRN 13) Orbit Visualization</title>
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Cesium.js"></script>
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <style>
-        #cesiumContainer {
-            width: 100%; height: 100%; position: absolute; top: 0; left: 0;
-        }
-    </style>
-</head>
-<body>
-<div id="cesiumContainer"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.1.3/satellite.min.js"></script>
-<script>
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
+            });
+            
 
-    const viewer = new Cesium.Viewer('cesiumContainer', {
-        shouldAnimate: true
-    });
-
-    // TLE data for GPS BIIR-2 (PRN 13)
-    const tle1 = '1 24876U 97035A   23335.84468286  .00000049  00000+0  00000+0 0  9994';
-    const tle2 = '2 24876  55.6130 134.8857 0075345  53.6276 307.0533  2.00564853193331';
-
-    const satrec = satellite.twoline2satrec(tle1, tle2);
-    const orbitPositions = [];
-    const start = new Date();
-    const end = new Date(start.getTime() + 90 * 60 * 1000); // 90 minutes for one orbit period
-    let time = start;
-    
-    while (time <= end) {
-        const positionAndVelocity = satellite.propagate(satrec, time);
-        if (positionAndVelocity.position) {
-            const gmst = satellite.gstime(time);
-            const positionGd = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-            const position = Cesium.Cartesian3.fromRadians(
-                positionGd.longitude,
-                positionGd.latitude,
-                positionGd.height * 1000
-            );
-            orbitPositions.push(position);
-        }
-        time = new Date(time.getTime() + 1000 * 10); // increment by 10 seconds
-    }
-
-    // Create the satellite orbit path
-    const orbitPath = viewer.entities.add({
-        polyline: {
-            positions: orbitPositions,
-            width: 2,
-            material: Cesium.Color.RED
-        }
-    });
-
-    // Create a moving satellite point
-    const satellitePoint = viewer.entities.add({
-        position: new Cesium.CallbackProperty(function(time) {
-            const jsDate = Cesium.JulianDate.toDate(time);
-            const positionAndVelocity = satellite.propagate(satrec, jsDate);
-            if (positionAndVelocity.position) {
-                const gmst = satellite.gstime(jsDate);
-                const positionGd = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-                return Cesium.Cartesian3.fromRadians(
-                    positionGd.longitude,
-                    positionGd.latitude,
-                    positionGd.height * 1000
-                );
+            
+            if (button.innerHTML === 'Only Show Satellites Used') {
+                button.innerHTML = 'Show All Satellites';
+                viewer.dataSources.add(czmlDataSource);
+                viewer.dataSources.remove(czmlDataSource_main);
+            } else {
+                button.innerHTML = 'Only Show Satellites Used';
+                viewer.dataSources.add(czmlDataSource_main);
+                viewer.dataSources.remove(czmlDataSource);
             }
-        }, false),
-        point: {
-            pixelSize: 5,
-            color: Cesium.Color.WHITE
         }
-    });
 
-    // Set the viewer to track the satellite
-    viewer.trackedEntity = satellitePoint;
 
-    // Configure the clock to simulate time passing
-    viewer.clock.startTime = Cesium.JulianDate.fromDate(start);
-    viewer.clock.currentTime = Cesium.JulianDate.fromDate(start);
-    viewer.clock.stopTime = Cesium.JulianDate.fromDate(end);
-    viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; // Loop at the end
-    viewer.clock.multiplier = 100; // Speed up the animation
 
-    // Fly to an appropriate distance
-    viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883, 10000000)
-    });
-</script>
+    // THIS IS FOR API ROUTES 
+    // let satellites_jsonData = null;
+    // async function fetchSatelliteData() {
+    //     try {
+    //         const response = await fetch('your-api-url');
+    //         satellites_jsonData = await response.json();
+    //     } catch (error) {
+    //         console.error('Error fetching satellite data:', error);
+    //     }
+    // }
+    // // Call fetchData when the page loads
+    // window.onload = fetchSatelliteData;
+
+    //     async function toggleButtonText2() {
+    //         var button = document.getElementById('toggleButton');
+    //         //console.log(satellites_jsonData.prn_satellites_used_array);
+    //         var czmlDataSource = new Cesium.CzmlDataSource();
+    //         await czmlDataSource.load('orbit.czml');
+
+    //         let sat_list = []
+
+
+
+    //         satellites_jsonData.prn_satellites_used_array.forEach(function(sat) {
+    //             var final_sat = "PRN " + sat;
+    //             if (sat < 10) {
+    //                 var final_sat = "PRN 0" + sat;
+
+
+    //             }
+    //             console.log(final_sat);
+    //             //console.log(czmlDataSource);
+
+    //             czmlDataSource.entities.values.forEach(function(entity) {
+    //                 //console.log(entity);
+    //                 if (entity.id.includes(final_sat)) {
+    //                     //console.log(entity.id);
+    //                     sat_list.push(entity.id);
+    //                     entity.show = true;
+    //                 }
+
+    //                 //entity.show = false;
+    //             });
+
+                
+    //         //for the main for loop     
+    //         });
+
+    //         console.log(sat_list);
+    //         czmlDataSource.entities.values.forEach(function(entity) {
+    //             if (sat_list.includes(entity.id)){
+    //                 //console.log("IN LIOST ", entity.id);
+    //                 entity.show = true;
+    //             } else {
+    //                 entity.show = false;
+
+    //             }
+
+
+    //         });
+            
+
+            
+    //         if (button.innerHTML === 'Only Show Satellites Used') {
+    //             button.innerHTML = 'Show All Satellites';
+    //             viewer.dataSources.add(czmlDataSource);
+    //             viewer.dataSources.remove(czmlDataSource_main);
+    //         } else {
+    //             button.innerHTML = 'Only Show Satellites Used';
+    //             viewer.dataSources.add(czmlDataSource_main);
+    //             viewer.dataSources.remove(czmlDataSource);
+    //         }
+    //     }
+
+    
+    
+    </script>
+
+
+<button id="toggleButton" onclick="toggleButtonText()">Only Show Satellites Used</button>
+
+
+<!-- BUTTON BELOW FOR API ROUTES -->
+
+<!-- <button id="toggleButton" onclick="toggleButtonText2()">Only Show Satellites Used</button> -->
+    
+
 </body>
 </html>
-
- -->
-
-
-
-
-
-
-
-
-
- <!-- <!DOCTYPE html>
- <html>
- <head>
-     <title>GPS BIIR-2 (PRN 13) Orbit Visualization</title>
-     <script src="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Cesium.js"></script>
-     <link href="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-     <style>
-         #cesiumContainer {
-             width: 100%; height: 100%; position: absolute; top: 0; left: 0;
-         }
-     </style>
- </head>
- <body>
- <div id="cesiumContainer"></div>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.1.3/satellite.min.js"></script>
- <script>
-     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
- 
-     const viewer = new Cesium.Viewer('cesiumContainer', {
-         shouldAnimate: true
-     });
- 
-     // TLE data for GPS BIIR-2 (PRN 13)
-     const tle1 = '1 24876U 97035A   23335.84468286  .00000049  00000+0  00000+0 0  9994';
-     const tle2 = '2 24876  55.6130 134.8857 0075345  53.6276 307.0533  2.00564853193331';
- 
-     const satrec = satellite.twoline2satrec(tle1, tle2);
-     const orbitPositions = [];
-     const start = new Date();
-     const orbitalPeriod = 2 * Math.PI / satrec.no; // Orbital period in seconds
-     const end = new Date(start.getTime() + orbitalPeriod * 1000); // Convert period to milliseconds
-     let time = start;
-     
-     while (time <= end) {
-         const positionAndVelocity = satellite.propagate(satrec, time);
-         if (positionAndVelocity.position) {
-             const gmst = satellite.gstime(time);
-             const positionGd = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-             const position = Cesium.Cartesian3.fromRadians(
-                 positionGd.longitude,
-                 positionGd.latitude,
-                 positionGd.height * 1000
-             );
-             orbitPositions.push(position);
-         }
-         time = new Date(time.getTime() + 1000 * 10); // increment by 10 seconds
-     }
- 
-     // Create the satellite orbit path (static full orbit)
-     const orbitPath = viewer.entities.add({
-         polyline: {
-             positions: orbitPositions,
-             width: 2,
-             material: Cesium.Color.RED
-         }
-     });
- 
-     // Create a moving satellite point (dynamic real-time position)
-     const satellitePoint = viewer.entities.add({
-         position: new Cesium.CallbackProperty(function(time) {
-             const jsDate = Cesium.JulianDate.toDate(time);
-             const positionAndVelocity = satellite.propagate(satrec, jsDate);
-             if (positionAndVelocity.position) {
-                 const gmst = satellite.gstime(jsDate);
-                 const positionGd = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-                 return Cesium.Cartesian3.fromRadians(
-                     positionGd.longitude,
-                     positionGd.latitude,
-                     positionGd.height * 1000
-                 );
-             }
-         }, false),
-         point: {
-             pixelSize: 5,
-             color: Cesium.Color.WHITE
-         }
-     });
- 
-     // Set the viewer to track the satellite
-     viewer.trackedEntity = satellitePoint;
- 
-     // Configure the clock to simulate time passing
-     viewer.clock.startTime = Cesium.JulianDate.fromDate(start);
-     viewer.clock.currentTime = Cesium.JulianDate.fromDate(start);
-     viewer.clock.stopTime = Cesium.JulianDate.fromDate(end);
-     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; // Loop at the end
-     viewer.clock.multiplier = 100; // Speed up the animation
- 
-     // Fly to an appropriate distance
-     viewer.camera.flyTo({
-         destination: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883, 10000000)
-     });
- </script>
- </body>
- </html>
- 
-
- -->
-
-
-  <!-- <!DOCTYPE html>
-  <html>
-  <head>
-      <title>GPS BIIR-2 (PRN 13) Orbit</title>
-      <script src="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Cesium.js"></script>
-      <link href="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-      <style>
-          #cesiumContainer {
-              width: 100%; height: 100%; position: absolute; top: 0; left: 0;
-          }
-      </style>
-  </head>
-  <body>
-  <div id="cesiumContainer"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.1.3/satellite.min.js"></script>
-  <script>
-      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
-  
-      const viewer = new Cesium.Viewer('cesiumContainer', {
-          shouldAnimate: true,
-          animation: true,
-          timeline: true
-      });
-  
-      // TLE data for GPS BIIR-2 (PRN 13)
-      const tle1 = '1 24876U 97035A   23335.84468286  .00000049  00000+0  00000+0 0  9994';
-      const tle2 = '2 24876  55.6130 134.8857 0075345  53.6276 307.0533  2.00564853193331';
-  
-      // Initialize a satellite record
-      const satrec = satellite.twoline2satrec(tle1, tle2);
-  
-      // Compute the satellite's position for 1 day, with a step of 10 minutes
-      const positions = [];
-      for (let i = 0; i < 1440; i += 10) {
-          const date = new Date(new Date().getTime() + i * 60000);
-          const positionAndVelocity = satellite.propagate(satrec, date);
-          const positionEci = positionAndVelocity.position;
-          const gmst = satellite.gstime(date);
-          const positionGd = satellite.eciToGeodetic(positionEci, gmst);
-          const position = Cesium.Cartesian3.fromRadians(
-              positionGd.longitude,
-              positionGd.latitude,
-              positionGd.height * 1000
-          );
-          positions.push(position);
-      }
-  
-      // Add the computed positions as a polyline to the viewer
-
-      viewer.entities.add({
-    polyline: {
-        positions: positions,
-        width: 2,
-        material: Cesium.Color.RED
-    }
-});
-
-// Add a real-time satellite point
-viewer.entities.add({
-    position: new Cesium.CallbackProperty(() => {
-        const now = new Date();
-        const positionAndVelocity = satellite.propagate(satrec, now);
-        if (positionAndVelocity.position) {
-            const gmst = satellite.gstime(now);
-            const positionGd = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-            return Cesium.Cartesian3.fromRadians(
-                positionGd.longitude,
-                positionGd.latitude,
-                positionGd.height * 1000
-            );
-        }
-        return null;
-    }, false),
-    point: {
-        pixelSize: 5,
-        color: Cesium.Color.YELLOW
-    }
-});
-
-// Adjust the viewer to see the whole trajectory
-viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883, 10000000)
-});
-</script>
-</body>
-</html>
-     
-   -->
