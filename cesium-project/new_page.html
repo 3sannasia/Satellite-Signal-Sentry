@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graphs and Signal Strength</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* margin: 0; */
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        
+        canvas {
+            max-width: 800px; 
+            margin: auto;
+        } 
+
+
+        /* table {
+            width: 10px;
+            margin-left: 50px;
+            margin-right: 500px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        } */
+        #satelliteTableContainer table {
+    width: 10%; /* Adjust the width to make the table narrower */
+    margin: 20px auto; /* This centers the table horizontally and adds 20px margin to the top and bottom */
+    border-collapse: collapse;
+}
+
+#satelliteTableContainer th, 
+#satelliteTableContainer td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h1>Graphs and Signal Strength</h1>
+</div>
+
+<div class="container">
+    <canvas id="cpuTempChart"></canvas>
+</div>
+<div class="container">
+    <canvas id="cpuFreqChart"></canvas>
+</div>
+
+<div class="container">
+    <canvas id="tdopChart"></canvas>
+</div>
+
+<div id="satelliteTableContainer"></div>
+
+
+<script>
+    // Function to fetch data and plot the graph
+    async function fetchTempAndPlot() {
+        try {
+            const response = await fetch('cpu_temp.json'); // Adjust the path if necessary
+            const jsonData = await response.json();
+
+            // Process the data
+            const temps = jsonData.cpu_temps.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_temps.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: temps,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuTempChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting data:', error);
+        }
+    }
+
+
+    // this function is to use with the api routes
+    async function fetchTempAndPlot2(jsonData) {
+        try {
+            // Process the data
+            const temps = jsonData.cpu_temps.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_temps.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: temps,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuTempChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting data:', error);
+        }
+    }
+
+
+
+    async function fetchFreqAndPlot() {
+        try {
+            const response = await fetch('cpu_freq.json'); // Adjust the path if necessary
+            const jsonData = await response.json();
+
+            // Process the data
+            const freqs = jsonData.cpu_freqs.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_freqs.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Frequency',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: freqs,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuFreqChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting freq data:', error);
+        }
+    }
+
+    
+    // this function is to use with the api routes
+    async function fetchFreqAndPlot2(jsonData) {
+        try {
+            // Process the data
+            const freqs = jsonData.cpu_freqs.map(entry => entry[0]);
+            const timestamps = jsonData.cpu_freqs.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'CPU Frequency',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: freqs,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('cpuFreqChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting freq data:', error);
+        }
+    }
+
+
+    async function fetchTdopAndPlot() {
+        try {
+            const response = await fetch('tdop_history.json'); // Adjust the path if necessary
+            const jsonData = await response.json();
+
+            // Process the data
+            const tdop = jsonData.tdop_history.map(entry => entry[0]);
+            const timestamps = jsonData.tdop_history.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'TDOP History',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: tdop,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('tdopChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting tdop data:', error);
+        }
+    }
+
+    // this function is to use with the api routes
+    async function fetchTdopAndPlot2(jsonData) {
+        try {
+           // Process the data
+            const tdop = jsonData.tdop_history.map(entry => entry[0]);
+            const timestamps = jsonData.tdop_history.map(entry => new Date(entry[1]).toLocaleTimeString());
+
+            // Setup the chart data
+            const data = {
+                labels: timestamps,
+                datasets: [{
+                    label: 'TDOP History',
+                    backgroundColor: 'rgba(250, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: tdop,
+                    fill: false,
+                }]
+            };
+
+            // Config for the chart
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            // Render the chart
+            new Chart(document.getElementById('tdopChart'), config);
+        } catch (error) {
+            console.error('Error fetching and plotting tdop data:', error);
+        }
+    }
+
+    async function fetchSatelliteDataAndCreateTable() {
+    try {
+        const response = await fetch('satellite_strength.json'); // Adjust the path if necessary
+        const jsonData = await response.json();
+
+        // Extract PRN and Signal Strength (ss) values
+        const satelliteData = jsonData.prn__ss_satellites_used_array.map(entry => ({
+            prn: entry.PRN,
+            ss: entry.ss
+        }));
+
+        // Create table
+        const table = document.createElement('table');
+        table.style.width = '30%';
+        table.setAttribute('border', '1');
+        
+        // Create table header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const prnHeader = document.createElement('th');
+        prnHeader.textContent = 'Used Satellite PRN';
+        const ssHeader = document.createElement('th');
+        ssHeader.textContent = 'Signal Strength';
+        headerRow.appendChild(prnHeader);
+        headerRow.appendChild(ssHeader);
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create table body
+        const tbody = document.createElement('tbody');
+        satelliteData.forEach(entry => {
+            const row = document.createElement('tr');
+            const prnCell = document.createElement('td');
+            prnCell.textContent = entry.prn;
+            const ssCell = document.createElement('td');
+            ssCell.textContent = entry.ss;
+            row.appendChild(prnCell);
+            row.appendChild(ssCell);
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+
+        // Append the table to the DOM
+        document.getElementById('satelliteTableContainer').innerHTML = '';
+        document.getElementById('satelliteTableContainer').appendChild(table);
+    } catch (error) {
+        console.error('Error fetching and creating table for satellite data:', error);
+    }
+}
+
+async function fetchSatelliteDataAndCreateTable2(jsonData) {
+    try {
+
+        // Extract PRN and Signal Strength (ss) values
+        const satelliteData = jsonData.prn__ss_satellites_used_array.map(entry => ({
+            prn: entry.PRN,
+            ss: entry.ss
+        }));
+
+        // Create table
+        const table = document.createElement('table');
+        table.style.width = '30%';
+        table.setAttribute('border', '1');
+        
+        // Create table header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const prnHeader = document.createElement('th');
+        prnHeader.textContent = 'Used Satellite PRN';
+        const ssHeader = document.createElement('th');
+        ssHeader.textContent = 'Signal Strength';
+        headerRow.appendChild(prnHeader);
+        headerRow.appendChild(ssHeader);
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create table body
+        const tbody = document.createElement('tbody');
+        satelliteData.forEach(entry => {
+            const row = document.createElement('tr');
+            const prnCell = document.createElement('td');
+            prnCell.textContent = entry.prn;
+            const ssCell = document.createElement('td');
+            ssCell.textContent = entry.ss;
+            row.appendChild(prnCell);
+            row.appendChild(ssCell);
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+
+        // Append the table to the DOM
+        document.getElementById('satelliteTableContainer').innerHTML = '';
+        document.getElementById('satelliteTableContainer').appendChild(table);
+    } catch (error) {
+        console.error('Error fetching and creating table for satellite data:', error);
+    }
+}
+
+
+    
+
+    //COMMENTED CODE TO USE WITH THE API ROUTES 
+
+    //Fetch the Temp data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchTempAndPlot2(data);
+    // })
+    // .catch(error => console.error('Unable to get TEMP items', error));
+
+    // //Fetch the Freq data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchFreqAndPlot2(data);
+    // })
+    // .catch(error => console.error('Unable to get FREQ items', error));
+
+
+    // //Fetch the TDOP data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchTdopAndPlot2(data);
+    // })
+    // .catch(error => console.error('Unable to get TDOP items', error));
+
+
+    //Fetch the TDOP data and plot 
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //     fetchSatelliteDataAndCreateTable2(data);
+    // })
+    // .catch(error => console.error('Unable to get satellite strength items', error));
+
+
+
+
+    // THIS IS FOR THE JSON DATA 
+    fetchTempAndPlot();
+    fetchFreqAndPlot();
+    fetchTdopAndPlot();
+    fetchSatelliteDataAndCreateTable();
+</script>
+
+</body>
+</html>
