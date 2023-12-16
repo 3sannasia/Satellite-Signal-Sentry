@@ -7,4 +7,3 @@ sqlite3
 fastapi
 uvicorn
 python-dotenv
-PyMySQL
