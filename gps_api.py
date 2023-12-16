@@ -71,7 +71,6 @@ def get_devices():
     cursor.execute(query)
     devices = cursor.fetchall()
     uuid_list = [device[0] for device in devices]
-    cursor.close()
     return {"devices": uuid_list}
 
 @app.get("/location/{uuid}")
@@ -185,4 +184,4 @@ def get_cpu_freqs(uuid: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("gps_api:app", port=5003)
+    uvicorn.run("gps_api:app", port=5003, reload=True)

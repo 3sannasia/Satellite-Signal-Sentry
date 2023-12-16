@@ -74,11 +74,14 @@
 
 
 <script>
+
+
+
     // Function to fetch data and plot the graph
     async function fetchTempAndPlot() {
         try {
-            // const response = await fetch('cpu_temp.json'); // Adjust the path if necessary
-            const response = await fetch('http://127.0.0.1:5003/cpu_temps/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+            const response = await fetch('cpu_temp.json'); // Adjust the path if necessary
+            // const response = await fetch('http://127.0.0.1:5003/cpu_temps/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
             const jsonData = await response.json();
 
             // Process the data
@@ -161,8 +164,8 @@
 
     async function fetchFreqAndPlot() {
         try {
-            // const response = await fetch('cpu_freq.json'); // Adjust the path if necessary
-            const response = await fetch('http://127.0.0.1:5003/cpu_freqs/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+            const response = await fetch('cpu_freq.json'); // Adjust the path if necessary
+            // const response = await fetch('http://127.0.0.1:5003/cpu_freqs/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
 
             const jsonData = await response.json();
 
@@ -245,8 +248,8 @@
 
     async function fetchTdopAndPlot() {
         try {
-            // const response = await fetch('tdop_history.json'); // Adjust the path if necessary
-            const response = await fetch('http://127.0.0.1:5003/tdop/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+            const response = await fetch('tdop_history.json'); // Adjust the path if necessary
+            // const response = await fetch('http://127.0.0.1:5003/tdop/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
 
             const jsonData = await response.json();
 
@@ -327,8 +330,8 @@
 
     async function fetchSatelliteDataAndCreateTable() {
     try {
-        // const response = await fetch('satellite_strength.json'); // Adjust the path if necessary
-        const response = await fetch('http://127.0.0.1:5003/prn_ss_satellite_used/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+        const response = await fetch('satellite_strength.json'); // Adjust the path if necessary
+        // const response = await fetch('http://127.0.0.1:5003/prn_ss_satellite_used/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
 
         const jsonData = await response.json();
 
@@ -428,27 +431,27 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
 
     
 
-    //COMMENTED CODE TO USE WITH THE API ROUTES 
+    // //COMMENTED CODE TO USE WITH THE API ROUTES 
 
-    //Fetch the Temp data and plot 
-    // fetch(url)
-    // .then(response => response.json())
-    // .then(data => {
-    //     fetchTempAndPlot2(data);
-    // })
-    // .catch(error => console.error('Unable to get TEMP items', error));
+    // Fetch the Temp data and plot 
+    fetch('http://127.0.0.1:5003/cpu_temps/d938e096-260c-423f-be0b-8867601e034f')
+    .then(response => response.json())
+    .then(data => {
+        fetchTempAndPlot2(data);
+    })
+    .catch(error => console.error('Unable to get TEMP items', error));
 
-    // //Fetch the Freq data and plot 
-    // fetch(url)
-    // .then(response => response.json())
-    // .then(data => {
-    //     fetchFreqAndPlot2(data);
-    // })
-    // .catch(error => console.error('Unable to get FREQ items', error));
+    //Fetch the Freq data and plot 
+    fetch('http://127.0.0.1:5003/cpu_freqs/d938e096-260c-423f-be0b-8867601e034f')
+    .then(response => response.json())
+    .then(data => {
+        fetchFreqAndPlot2(data);
+    })
+    .catch(error => console.error('Unable to get FREQ items', error));
 
 
     // //Fetch the TDOP data and plot 
-    // fetch(url)
+    // fetch('http://127.0.0.1:5003/tdop/d938e096-260c-423f-be0b-8867601e034f')
     // .then(response => response.json())
     // .then(data => {
     //     fetchTdopAndPlot2(data);
@@ -456,8 +459,8 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
     // .catch(error => console.error('Unable to get TDOP items', error));
 
 
-    //Fetch the TDOP data and plot 
-    // fetch(url)
+    // 
+    // fetch(''http://127.0.0.1:5003/prn_ss_satellite_used/d938e096-260c-423f-be0b-8867601e034f'')
     // .then(response => response.json())
     // .then(data => {
     //     fetchSatelliteDataAndCreateTable2(data);
@@ -469,9 +472,9 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
 
     // THIS IS FOR THE JSON DATA 
     // fetchTempAndPlot();
-    fetchFreqAndPlot();
+    // fetchFreqAndPlot();
     // fetchTdopAndPlot();
-    fetchSatelliteDataAndCreateTable();
+    // fetchSatelliteDataAndCreateTable();
 </script>
 
 </body>

@@ -30,6 +30,14 @@ You can reach me at: <br/>
 Gmail: akashsan522@gmail.com <br/>
 LinkedIn: https://www.linkedin.com/in/-akash-s/
 
+Harshda Ghai
+- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science. I am graduating in May 2024, and have taken courses in Data Structures, System Programming, Database Management Systems, Artificial Intelligence, and IOT. I have previous internship experience working as a Software Engineering Intern for Mettl | Mercer and have worked in a startup for my previous internship. My skills include Python, Java, C++, SQL. My interest areas include - AI/ML Algorithms and IOT.
+
+You can reach me at: <br/>
+Email : hghai2@illinois.edu <br/>
+LinkedIn: https://www.linkedin.com/in/harshda-ghai-3853b3187 
+
+
 Ananya Agarwal
 - I am an undergraduate student studying Computer science at the University of Illinois at Urbana Champaign. I am going to graduate may 2024. I have 
 taken courses in database Management systems, Artificial Intellifence, statistics for Computer Science, System programming,Algorithms and data structures and IOT. I have experince working as a software development intern at Tesla and Ericsson. My skills include python, Java, CSS, C#, HTML, Javascript, C++.
@@ -38,12 +46,6 @@ You can reach me at: <br/>
 Linkedin : https://www.linkedin.com/in/ananya-agarwal-407196205/
 
 
-Harshda Ghai
-- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science. I am graduating in May 2024, and have taken courses in Data Structures, System Programming, Database Management Systems, Artificial Intelligence, and IOT. I have previous internship experience working as a Software Engineering Intern for Mettl | Mercer and have worked in a startup for my previous internship. My skills include Python, Java, C++, SQL. My interest areas include - AI/ML Algorithms and IOT.
-
-You can reach me at: <br/>
-Email : hghai2@illinois.edu <br/>
-LinkedIn: https://www.linkedin.com/in/harshda-ghai-3853b3187 
 
 Vashishth Goswami
 - I'm an undergrad student at the University of Illinois Urbana-Champaign, graduating in May 2024. I have taken courses like Intro. to Algorithms and models of computations, System Programming, Artificial Intelligence. I have worked for NASA Lunabotics Competition where I helped with automation and GUI interface for controls. My skills include Python, Java, C++, Ocaml. Following my interest in systems, I want to work in Cryptography, Architecture and Math.
@@ -118,6 +120,9 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 
 #### Setting up pi MySQL instance
 - https://pimylifeup.com/raspberry-pi-mysql/
+
+#### TLE Data used for Satellites
+- https://github.com/kujosHeist/tle2czml
 
 ## Roadmap for Future Ideas
 - Use tools like Prometheus, Grafana, or commercial monitoring solutions to gain insights into your system's health on the frontend

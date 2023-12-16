@@ -27,6 +27,8 @@
 <body>
     <div id="cesiumContainer" style="width: 100%; height: 100%;"></div>
     <script>
+        var current = null;
+
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YzFhYWRlOC0yMWE5LTQ5NmQtYTIzNS0zNjhjYjEwZWFiOWEiLCJpZCI6MTgxODk1LCJpYXQiOjE3MDE0MTAwMTd9.Ytc6dilxPmTS6wbeU7OW6vtiN5XPwvS3vAXJv7Dtpco';
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
@@ -55,27 +57,51 @@
 
      async function plot_devices() {
         try {
-            const devices_response = await fetch('cesium-project/devices.json'); // Adjust the path if necessary
-            // const devices_response = await fetch('http://127.0.0.1:5003/devices');
+            // const devices_response = await fetch('cesium-project/devices.json'); // Adjust the path if necessary
+            const devices_response = await fetch('http://127.0.0.1:5003/devices');
+
             const devices_jsonData = await devices_response.json();
-
+            // console.log(devices_jsonData)
+            current = devices_jsonData.devices[0];
+            // console.log(current)
             // const locations_response = await fetch('locations.json'); // Adjust the path if necessary
-            const locations_response = await fetch('http://127.0.0.1:5003/location/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
-            console.log(locations_response)
+            // const locations_response = await fetch('http://127.0.0.1:5003/location/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
 
-            const locations_jsonData = await locations_response.json();
+            // const locations_jsonData = await locations_response.json();
 
-            //console.log(locations_jsonData);
+            // console.log(locations_jsonData);
 
-            const mergedData = devices_jsonData.devices.map((id, index) => {
-                return {
-                    id: id,
-                    longitude: locations_jsonData.location[index],
-                    latitude: locations_jsonData.location[index + 1]
+            // const mergedData = devices_jsonData.devices.map((id, index) => {
+            //     return {
+            //         id: id,
+            //         longitude: locations_jsonData.location[index],
+            //         latitude: locations_jsonData.location[index + 1]
                     
-                };
-            });
-            //console.log(mergedData);
+            //     };
+            // });
+            const mergedData = [];
+            for (const id of devices_jsonData.devices) {
+                const locations_response = await fetch(`http://127.0.0.1:5003/location/${id}`);
+                
+                if (locations_response.ok) {
+                    const locations_jsonData = await locations_response.json();
+
+                    // console.log(locations_jsonData.location);
+                    const formattedData = {
+                        id: id,
+                        latitude: locations_jsonData.location[1],
+                        longitude: locations_jsonData.location[0]
+                    };
+                    mergedData.push(formattedData);
+                    console.log(`Location data for ${id} fetched successfully.`);
+                } else {
+                    console.error(`Error: Unable to fetch data for ${id}. Status code: ${locations_response.status}`);
+                }
+            }
+
+        // Now mergedData contains an array of objects with id, latitude, and longitude
+            console.log("Merged Data:", mergedData);
+            // console.log(mergedData);
 
        mergedData.forEach(device => {
             viewer.entities.add({
@@ -178,7 +204,7 @@
     plot_devices();
 
 
-    viewer.screenSpaceEventHandler.setInputAction(function (movement) {
+   viewer.screenSpaceEventHandler.setInputAction(function (movement) {
     try {
         var pickedObject = viewer.scene.pick(movement.position);
         if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id)) {
@@ -198,7 +224,7 @@
     async function toggleButtonText() {
             var button = document.getElementById('toggleButton');
             // const satellites_response = await fetch('satellites_used.json'); // Adjust the path if necessary
-            const satellites_response = await fetch('http://127.0.0.1:5003/prn_satellite_used/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+            const satellites_response = await fetch(`http://127.0.0.1:5003/prn_satellite_used/${current}`); // Adjust the path if necessary
 
             const satellites_jsonData = await satellites_response.json();
             //console.log(satellites_jsonData.prn_satellites_used_array);
@@ -216,7 +242,7 @@
 
 
                 }
-                console.log(final_sat);
+                // console.log(final_sat);
                 //console.log(czmlDataSource);
 
                 czmlDataSource.entities.values.forEach(function(entity) {
