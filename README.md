@@ -64,6 +64,9 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 ## Installation
 - Install Libraries: 
     - ```pip3 install -r requirements.txt```
+- Setup MySQL instance and .env file
+- Run Database Setup file
+    - ```python3 db_setup.py```
 - Run Project (api service + GNSS receiver data collection + frontend) 
     - run ```./run_gps_api.sh```
 
