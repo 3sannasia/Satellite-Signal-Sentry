@@ -212,7 +212,7 @@
             var entity = viewer.entities.getById(entityId);
 
             if (entityId) {
-                window.location.href = 'cesium-project/device_stats.html';
+                window.location.href = 'cesium-project/device_stats.html?device_id=' + entityId.id;
             }
         }
     } catch (error) {

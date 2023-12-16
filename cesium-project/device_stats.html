@@ -76,6 +76,9 @@
 <script>
 
 
+    var urlParams = new URLSearchParams(window.location.search);
+    var device_id = urlParams.get('device_id');
+    console.log(device_id);
 
     // Function to fetch data and plot the graph
     async function fetchTempAndPlot() {
@@ -119,7 +122,6 @@
             console.error('Error fetching and plotting data:', error);
         }
     }
-
 
     // this function is to use with the api routes
     async function fetchTempAndPlot2(jsonData) {
@@ -204,7 +206,7 @@
             console.error('Error fetching and plotting freq data:', error);
         }
     }
-
+ 
     
     // this function is to use with the api routes
     async function fetchFreqAndPlot2(jsonData) {
@@ -434,7 +436,7 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
     // //COMMENTED CODE TO USE WITH THE API ROUTES 
 
     // Fetch the Temp data and plot 
-    fetch('http://127.0.0.1:5003/cpu_temps/d938e096-260c-423f-be0b-8867601e034f')
+    fetch(`http://127.0.0.1:5003/cpu_temps/${device_id}`)
     .then(response => response.json())
     .then(data => {
         fetchTempAndPlot2(data);
@@ -442,7 +444,7 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
     .catch(error => console.error('Unable to get TEMP items', error));
 
     //Fetch the Freq data and plot 
-    fetch('http://127.0.0.1:5003/cpu_freqs/d938e096-260c-423f-be0b-8867601e034f')
+    fetch(`http://127.0.0.1:5003/cpu_freqs/${device_id}`)
     .then(response => response.json())
     .then(data => {
         fetchFreqAndPlot2(data);
@@ -451,7 +453,7 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
 
 
     // //Fetch the TDOP data and plot 
-    // fetch('http://127.0.0.1:5003/tdop/d938e096-260c-423f-be0b-8867601e034f')
+    // fetch(`http://127.0.0.1:5003/tdop/${device_id}`)
     // .then(response => response.json())
     // .then(data => {
     //     fetchTdopAndPlot2(data);
@@ -460,7 +462,7 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
 
 
     // 
-    // fetch(''http://127.0.0.1:5003/prn_ss_satellite_used/d938e096-260c-423f-be0b-8867601e034f'')
+    // fetch(`http://127.0.0.1:5003/prn_ss_satellite_used/${device_id}`)
     // .then(response => response.json())
     // .then(data => {
     //     fetchSatelliteDataAndCreateTable2(data);
