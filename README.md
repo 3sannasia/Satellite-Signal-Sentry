@@ -144,7 +144,7 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - Local MySQL instance done
 - Frontend includes all U.S. Satellites currently (31)
 - Displays currently connected devices
-- On click you can see charts of that device's data, but does not live update unless you reload
+- On click you can see charts of that device's data, but does not live update unless you reclick
 - Needs asynchronous reloading and data fetching
 
 
