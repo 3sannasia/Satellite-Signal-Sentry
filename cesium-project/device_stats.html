@@ -77,7 +77,8 @@
     // Function to fetch data and plot the graph
     async function fetchTempAndPlot() {
         try {
-            const response = await fetch('cpu_temp.json'); // Adjust the path if necessary
+            // const response = await fetch('cpu_temp.json'); // Adjust the path if necessary
+            const response = await fetch('http://127.0.0.1:5003/cpu_temps/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
             const jsonData = await response.json();
 
             // Process the data
@@ -160,7 +161,9 @@
 
     async function fetchFreqAndPlot() {
         try {
-            const response = await fetch('cpu_freq.json'); // Adjust the path if necessary
+            // const response = await fetch('cpu_freq.json'); // Adjust the path if necessary
+            const response = await fetch('http://127.0.0.1:5003/cpu_freqs/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+
             const jsonData = await response.json();
 
             // Process the data
@@ -242,7 +245,9 @@
 
     async function fetchTdopAndPlot() {
         try {
-            const response = await fetch('tdop_history.json'); // Adjust the path if necessary
+            // const response = await fetch('tdop_history.json'); // Adjust the path if necessary
+            const response = await fetch('http://127.0.0.1:5003/tdop/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+
             const jsonData = await response.json();
 
             // Process the data
@@ -322,7 +327,9 @@
 
     async function fetchSatelliteDataAndCreateTable() {
     try {
-        const response = await fetch('satellite_strength.json'); // Adjust the path if necessary
+        // const response = await fetch('satellite_strength.json'); // Adjust the path if necessary
+        const response = await fetch('http://127.0.0.1:5003/prn_ss_satellite_used/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+
         const jsonData = await response.json();
 
         // Extract PRN and Signal Strength (ss) values
@@ -461,9 +468,9 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
 
 
     // THIS IS FOR THE JSON DATA 
-    fetchTempAndPlot();
+    // fetchTempAndPlot();
     fetchFreqAndPlot();
-    fetchTdopAndPlot();
+    // fetchTdopAndPlot();
     fetchSatelliteDataAndCreateTable();
 </script>
 

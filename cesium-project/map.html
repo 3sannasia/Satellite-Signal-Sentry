@@ -49,16 +49,20 @@
 
 
         var czmlDataSource_main = new Cesium.CzmlDataSource();
-        czmlDataSource_main.load('orbit.czml');
+        czmlDataSource_main.load('cesium-project/orbit.czml');
         viewer.dataSources.add(czmlDataSource_main);
         //viewer.dataSources.remove(czmlDataSource2);
 
      async function plot_devices() {
         try {
-            const devices_response = await fetch('devices.json'); // Adjust the path if necessary
+            const devices_response = await fetch('cesium-project/devices.json'); // Adjust the path if necessary
+            // const devices_response = await fetch('http://127.0.0.1:5003/devices');
             const devices_jsonData = await devices_response.json();
 
-            const locations_response = await fetch('locations.json'); // Adjust the path if necessary
+            // const locations_response = await fetch('locations.json'); // Adjust the path if necessary
+            const locations_response = await fetch('http://127.0.0.1:5003/location/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+            console.log(locations_response)
+
             const locations_jsonData = await locations_response.json();
 
             //console.log(locations_jsonData);
@@ -73,26 +77,31 @@
             });
             //console.log(mergedData);
 
-            mergedData.forEach(device => {
-                viewer.entities.add({
-                    position: Cesium.Cartesian3.fromDegrees(device.longitude, device.latitude), // Slicing to get only longitude and latitude
-                    label: {
-                        text: device.id,
-                        show: true,
-                        font: '14px sans-serif',
-                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                        fillColor: Cesium.Color.YELLOW,
-                        outlineColor: Cesium.Color.BLACK,
-                        outlineWidth: 2,
-                        pixelOffset: new Cesium.Cartesian2(0, -30), // Adjust the label position
-                    },
-                    id: device.id,
-                    properties: {
-                        description: 'Device ID: ' + device.id
-                    }
-                });
+       mergedData.forEach(device => {
+            viewer.entities.add({
+                position: Cesium.Cartesian3.fromDegrees(device.longitude, device.latitude),
+                label: {
+                    text: device.id,
+                    show: true,
+                    font: '14px sans-serif',
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    fillColor: Cesium.Color.YELLOW,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                    pixelOffset: new Cesium.Cartesian2(0, -30),
+                    minimumPixelSize: 1,
+                },
+                point: {
+                    pixelSize: 10, // Adjust the size of the point
+                    color: Cesium.Color.RED,
+                    minimumPixelSize: 1,
+                },
+                id: device.id,
+                properties: {
+                    description: 'Device ID: ' + device.id
+                }
             });
-
+        });
 
 
         } catch (error) {
@@ -177,7 +186,7 @@
             var entity = viewer.entities.getById(entityId);
 
             if (entityId) {
-                window.location.href = 'new_page.html';
+                window.location.href = 'cesium-project/device_stats.html';
             }
         }
     } catch (error) {
@@ -188,11 +197,13 @@
 
     async function toggleButtonText() {
             var button = document.getElementById('toggleButton');
-            const satellites_response = await fetch('satellites_used.json'); // Adjust the path if necessary
+            // const satellites_response = await fetch('satellites_used.json'); // Adjust the path if necessary
+            const satellites_response = await fetch('http://127.0.0.1:5003/prn_satellite_used/d938e096-260c-423f-be0b-8867601e034f'); // Adjust the path if necessary
+
             const satellites_jsonData = await satellites_response.json();
             //console.log(satellites_jsonData.prn_satellites_used_array);
             var czmlDataSource = new Cesium.CzmlDataSource();
-            await czmlDataSource.load('orbit.czml');
+            await czmlDataSource.load('cesium-project/orbit.czml');
 
             let sat_list = []
 

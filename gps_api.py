@@ -3,9 +3,33 @@ import mysql.connector
 from dotenv import load_dotenv
 import os
 import json
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 app = FastAPI()
-# run with uvicorn gps_api:app --port 5002 --reload
+
+# Serve static files from the 'cesium-project' directory
+app.mount("/cesium-project", StaticFiles(directory="cesium-project"), name="cesium_project")
+
+
+# CORS middleware configuration
+origins = [
+    "http://127.0.0.1:5500"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
+
+
+# run with uvicorn gps_api:app --port 5003 --reload
 load_dotenv()
 
 # Replace these variables with your MySQL connection details
@@ -26,8 +50,18 @@ connection = mysql.connector.connect(
 cursor = connection.cursor()
 
 @app.get("/")
-def read_root():
-    return {"message": "See swagger docs at /docs"}
+def render_map_html():
+    # Replace 'cesium-project/map.html' with the correct path to your HTML file
+    html_file_path = Path("cesium-project/map.html")
+
+    # Check if the file exists
+    if html_file_path.exists():
+        # Read the content of the HTML file
+        html_content = html_file_path.read_text()
+        # Use HTMLResponse to serve the HTML content
+        return HTMLResponse(content=html_content, status_code=200)
+    else:
+        raise HTTPException(status_code=404, detail="HTML file not found")
 
 @app.get("/devices")   
 def get_devices():
@@ -37,12 +71,13 @@ def get_devices():
     cursor.execute(query)
     devices = cursor.fetchall()
     uuid_list = [device[0] for device in devices]
+    cursor.close()
     return {"devices": uuid_list}
 
 @app.get("/location/{uuid}")
 def get_loc_data(uuid: str):
     global cursor
-    
+    connection.reconnect()
     query = "SELECT longitude, latitude, altitude FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_3d_coordinates = cursor.fetchone()
@@ -56,6 +91,7 @@ def get_tdop_data(uuid: str):
     cursor.execute(query, (uuid,))
     device_tdop_history = cursor.fetchall()
     return {"tdop_history": device_tdop_history}
+
 
 @app.get("/satellite/{uuid}")
 def get_satellite_data(uuid: str):
@@ -149,4 +185,4 @@ def get_cpu_freqs(uuid: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("gps_api:app", host="127.0.0.1", port=5001, reload=True)
+    uvicorn.run("gps_api:app", port=5003)
