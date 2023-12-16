@@ -58,6 +58,7 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 ## Visuals
 ![satellites](screenshots/sats.png)
 ![used_satellites](screenshots/used_sat.png)
+![graph](screenshots/graphs.png)
 ![graphs_1](screenshots/graphs_p1.png)
 ![graphs_2](screenshots/graphs_p2.png)
 ![docs](screenshots/docs.png)
