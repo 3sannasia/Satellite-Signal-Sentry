@@ -160,7 +160,7 @@ def insert_GPS_data(uuid, time, longitude, latitude, altitude, mode, tdop, nSat,
     gps_insert_query = "INSERT INTO gps_data (uuid, time, longitude, latitude, altitude, mode, nSat, uSat, TDOP, satellites, cpu_temp, cpu_freq) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     cursor.execute(gps_insert_query, (gps_json['uuid'], gps_json['time'], gps_json['longitude'], gps_json['latitude'], gps_json['altitude'], gps_json['mode'], gps_json['nSat'], gps_json['uSat'], gps_json['TDOP'], gps_json['satellites'], gps_json['cpu_temp'], gps_json['cpu_freq']))
     connection.commit()
-    print("\nGPS data inserted to database!")
+    print("GPS data inserted to database!")
     
     
 def print_TPV_SKY_data(gps):
@@ -215,7 +215,7 @@ try:
     register_to_database()
     print("GPS Application Started!")
     while running:
-        print_TPV_SKY_data(gpsd)
+        # print_TPV_SKY_data(gpsd)
         get_TPV_SKY_device_data(gpsd)
         time.sleep(2)
 except KeyboardInterrupt:

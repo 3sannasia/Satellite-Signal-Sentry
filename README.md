@@ -6,8 +6,11 @@ This repository holds scripts to pull GNSS and satellite data and store it in a 
 ### Components:
 - Backend
     - MySQL
+    - Python
     - FastAPI
 - Frontend
+    - HTML/CSS
+    - JavaScript
     - CesiumJS
     - ChartJS
 
@@ -27,6 +30,14 @@ You can reach me at: <br/>
 Gmail: akashsan522@gmail.com <br/>
 LinkedIn: https://www.linkedin.com/in/-akash-s/
 
+Harshda Ghai
+- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science. I am graduating in May 2024, and have taken courses in Data Structures, System Programming, Database Management Systems, Artificial Intelligence, and IOT. I have previous internship experience working as a Software Engineering Intern for Mettl | Mercer and have worked in a startup for my previous internship. My skills include Python, Java, C++, SQL. My interest areas include - AI/ML Algorithms and IOT.
+
+You can reach me at: <br/>
+Email : hghai2@illinois.edu <br/>
+LinkedIn: https://www.linkedin.com/in/harshda-ghai-3853b3187 
+
+
 Ananya Agarwal
 - I am an undergraduate student studying Computer science at the University of Illinois at Urbana Champaign. I am going to graduate may 2024. I have 
 taken courses in database Management systems, Artificial Intellifence, statistics for Computer Science, System programming,Algorithms and data structures and IOT. I have experince working as a software development intern at Tesla and Ericsson. My skills include python, Java, CSS, C#, HTML, Javascript, C++.
@@ -35,12 +46,6 @@ You can reach me at: <br/>
 Linkedin : https://www.linkedin.com/in/ananya-agarwal-407196205/
 
 
-Harshda Ghai
-- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science. I am graduating in May 2024, and have taken courses in Data Structures, System Programming, Database Management Systems, Artificial Intelligence, and IOT. I have previous internship experience working as a Software Engineering Intern for Mettl | Mercer and have worked in a startup for my previous internship. My skills include Python, Java, C++, SQL. My interest areas include - AI/ML Algorithms and IOT.
-
-You can reach me at: <br/>
-Email : hghai2@illinois.edu <br/>
-LinkedIn: https://www.linkedin.com/in/harshda-ghai-3853b3187 
 
 Vashishth Goswami
 - I'm an undergrad student at the University of Illinois Urbana-Champaign, graduating in May 2024. I have taken courses like Intro. to Algorithms and models of computations, System Programming, Artificial Intelligence. I have worked for NASA Lunabotics Competition where I helped with automation and GUI interface for controls. My skills include Python, Java, C++, Ocaml. Following my interest in systems, I want to work in Cryptography, Architecture and Math.
@@ -51,16 +56,22 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 
 
 ## Visuals
-- Add screenshots of final product
+![satellites](screenshots/sats.png)
+![used_satellites](screenshots/used_sat.png)
+![graph](screenshots/graphs.png)
+![graphs_1](screenshots/graphs_p1.png)
+![graphs_2](screenshots/graphs_p2.png)
+![docs](screenshots/docs.png)
+
 
 ## Installation
 - Install Libraries: 
     - ```pip3 install -r requirements.txt```
-    - ```TODO for frontend```
-- Run Backend (api service + GNSS receiver data collection) 
+- Setup MySQL instance and .env file
+- Run Database Setup file
+    - ```python3 db_setup.py```
+- Run Project (api service + GNSS receiver data collection + frontend) 
     - run ```./run_gps_api.sh```
-- Run Frontend (3D Visualization)
-    - run ```live server```
 
 ## Usage
 - Need a .env file with your mysql database credentials
@@ -73,18 +84,19 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
     - device stays recorded in the connected_devices_history table
 - The CesiumJS frontend uses the data to populate the globe with device locations and satellites in real-time
 - ChartJS charts are displayed
-    - cpu temperatures,
-    - TDOP (time dilution of precision)
-    - cumulative satellite signal strength over time
-### Features - TODO Add Pictures
+    - cpu temperatures over time
+    - cpu frequency over time
+    - TDOP (time dilution of precision) over time
+    - current satellite signal strength
+
+### Features
 1. 3D Visualization of gps locations on the Earth
 2. Satellites orbitting the Earth in real-time
 3. See what satellites your gps device is using
-4. See ChartJS graphs on clicking device
-
+4. Click on device location or name to be redirected to generated graphs of cpu-temp, cpu-freq, TDOP (time dilution of precision), and used satellite PRN and their satellite strengths
 ### Testing
-- Run pytests
-- ```TODO```
+- run ```./run_gps_api.sh```
+- Navigate to the FastAPI docs ```http://127.0.0.1:5003/docs```
 
 ## Changes from Project Proposal
 - Initial plans of restricting GNSS and switch GNSS constellation automatically if massive spike in latency scrapped. This is because there is not an ideal way to measure latency other than using TDOP and satellite strength. We also realized the receiver automatically switches if necessary and ublox commands already exist to restrict GNSS constellations
@@ -92,10 +104,6 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - Our focus changed to satellite signal strength and TDOP instead in regards to the importance of time in HFT
 - Left out NATS to simplify data transfer between the frontend and backend to FastAPI
 - Ublox already has a time mode for being able to make pis have a static location after 10 seconds (average locations) then turn off the location just for timestamp
-
-
-
-
 
 
 ## Support
@@ -114,6 +122,9 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 #### Setting up pi MySQL instance
 - https://pimylifeup.com/raspberry-pi-mysql/
 
+#### TLE Data used for Satellites
+- https://github.com/kujosHeist/tle2czml
+
 ## Roadmap for Future Ideas
 - Use tools like Prometheus, Grafana, or commercial monitoring solutions to gain insights into your system's health on the frontend
 - Implement ublox command sending from the UI and see satellite changes in real time
@@ -128,11 +139,14 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 - User notifications when satellite signal strength or TDOP is unideal
 - Detect trucker GPS jamming and alert the user about latency issue
 
-
 ## Project status
-- Backend established
-- Frontend includes only all U.S. Satellites currently (31)
+- API/backend established with registering/inserting/fetching routes complete
+- Local MySQL instance done
+- Frontend includes all U.S. Satellites currently (31)
 - Displays currently connected devices
+- On click you can see charts of that device's data, but does not live update unless you reload
+- Needs asynchronous reloading and data fetching
+
 
 
 
