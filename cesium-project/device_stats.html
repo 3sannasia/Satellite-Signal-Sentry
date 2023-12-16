@@ -452,22 +452,22 @@ async function fetchSatelliteDataAndCreateTable2(jsonData) {
     .catch(error => console.error('Unable to get FREQ items', error));
 
 
-    // //Fetch the TDOP data and plot 
-    // fetch(`http://127.0.0.1:5003/tdop/${device_id}`)
-    // .then(response => response.json())
-    // .then(data => {
-    //     fetchTdopAndPlot2(data);
-    // })
-    // .catch(error => console.error('Unable to get TDOP items', error));
+    //Fetch the TDOP data and plot 
+    fetch(`http://127.0.0.1:5003/tdop/${device_id}`)
+    .then(response => response.json())
+    .then(data => {
+        fetchTdopAndPlot2(data);
+    })
+    .catch(error => console.error('Unable to get TDOP items', error));
 
 
-    // 
-    // fetch(`http://127.0.0.1:5003/prn_ss_satellite_used/${device_id}`)
-    // .then(response => response.json())
-    // .then(data => {
-    //     fetchSatelliteDataAndCreateTable2(data);
-    // })
-    // .catch(error => console.error('Unable to get satellite strength items', error));
+    
+    fetch(`http://127.0.0.1:5003/prn_ss_satellite_used/${device_id}`)
+    .then(response => response.json())
+    .then(data => {
+        fetchSatelliteDataAndCreateTable2(data);
+    })
+    .catch(error => console.error('Unable to get satellite strength items', error));
 
 
 

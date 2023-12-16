@@ -12,13 +12,13 @@ from pathlib import Path
 app = FastAPI()
 
 # Serve static files from the 'cesium-project' directory
-app.mount("/cesium-project", StaticFiles(directory="cesium-project"), name="cesium_project")
+app.mount(
+    "/cesium-project", StaticFiles(directory="cesium-project"), name="cesium_project"
+)
 
 
 # CORS middleware configuration
-origins = [
-    "http://127.0.0.1:5500"
-]
+origins = ["http://127.0.0.1:5500"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,9 +45,10 @@ connection = mysql.connector.connect(
     password=mysql_password,
     host=mysql_host,
     database=mysql_database,
-    port=mysql_port
+    port=mysql_port,
 )
 cursor = connection.cursor()
+
 
 @app.get("/")
 def render_map_html():
@@ -63,50 +64,91 @@ def render_map_html():
     else:
         raise HTTPException(status_code=404, detail="HTML file not found")
 
-@app.get("/devices")   
+
+@app.get("/devices")
 def get_devices():
-    global cursor
-    
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
+
     query = "SELECT uuid FROM connected_devices"
     cursor.execute(query)
     devices = cursor.fetchall()
     uuid_list = [device[0] for device in devices]
+    cursor.close()
     return {"devices": uuid_list}
+
 
 @app.get("/location/{uuid}")
 def get_loc_data(uuid: str):
-    global cursor
-    connection.reconnect()
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
     query = "SELECT longitude, latitude, altitude FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_3d_coordinates = cursor.fetchone()
+    cursor.close()
     return {"location": device_3d_coordinates}
+
 
 @app.get("/tdop/{uuid}")
 def get_tdop_data(uuid: str):
-    global cursor
-    
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
+
     query = "SELECT tdop, time FROM gps_data WHERE uuid = %s ORDER BY time DESC"
     cursor.execute(query, (uuid,))
     device_tdop_history = cursor.fetchall()
+    cursor.close()
     return {"tdop_history": device_tdop_history}
 
 
 @app.get("/satellite/{uuid}")
 def get_satellite_data(uuid: str):
-    global cursor
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
     query = "SELECT satellites, time FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_satellite_data = cursor.fetchone()
     satellite_list = json.loads(device_satellite_data[0])
     datetime = device_satellite_data[1]
+    cursor.close()
     return {"satellite_list": satellite_list, "datetime": str(datetime)}
 
 
 @app.get("/prn_satellite_used/{uuid}")
 def get_prn_satellite_used(uuid: str):
-    global cursor
-    
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
+
     query = "SELECT satellites, time FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_satellite_data = cursor.fetchone()
@@ -116,13 +158,21 @@ def get_prn_satellite_used(uuid: str):
     for satellite_dict in satellite_list:
         if satellite_dict["used"]:
             prn_used.append(satellite_dict["PRN"])
+    cursor.close()
     return {"prn_satellites_used_array": prn_used, "datetime": str(datetime)}
 
 
 @app.get("/prn_satellite_seen/{uuid}")
 def get_prn_satellite_seen(uuid: str):
-    global cursor
-        
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
+
     query = "SELECT satellites, time FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_satellite_data = cursor.fetchone()
@@ -131,12 +181,20 @@ def get_prn_satellite_seen(uuid: str):
     prn_seen = []
     for satellite_dict in satellite_list:
         prn_seen.append(satellite_dict["PRN"])
+    cursor.close()
     return {"prn_satellites_seen_array": prn_seen, "datetime": str(datetime)}
 
 
 @app.get("/prn_ss_satellite_used/{uuid}")
 def get_prn_ss_satellite_used(uuid: str):
-    global cursor
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
     query = "SELECT satellites, time FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_satellite_data = cursor.fetchone()
@@ -145,13 +203,21 @@ def get_prn_ss_satellite_used(uuid: str):
     prn_used = []
     for satellite_dict in satellite_list:
         if satellite_dict["used"]:
-            prn_used.append({"PRN": satellite_dict["PRN"], "ss": satellite_dict['ss']})
+            prn_used.append({"PRN": satellite_dict["PRN"], "ss": satellite_dict["ss"]})
+    cursor.close()
     return {"prn__ss_satellites_used_array": prn_used, "datetime": str(datetime)}
 
 
 @app.get("/prn_ss_satellite_seen/{uuid}")
 def get_prn_ss_satellite_seen(uuid: str):
-    global cursor
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
     query = "SELECT satellites, time FROM gps_data WHERE uuid = %s ORDER BY time DESC LIMIT 1"
     cursor.execute(query, (uuid,))
     device_satellite_data = cursor.fetchone()
@@ -159,29 +225,48 @@ def get_prn_ss_satellite_seen(uuid: str):
     datetime = device_satellite_data[1]
     prn_seen = []
     for satellite_dict in satellite_list:
-        prn_seen.append({"PRN": satellite_dict["PRN"], "ss": satellite_dict['ss']})
+        prn_seen.append({"PRN": satellite_dict["PRN"], "ss": satellite_dict["ss"]})
+    cursor.close()
     return {"prn__ss_satellites_used_array": prn_seen, "datetime": str(datetime)}
 
 
 @app.get("/cpu_temps/{uuid}")
 def get_cpu_temps(uuid: str):
-    global cursor
-    
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
+
     query = "SELECT cpu_temp, time FROM gps_data WHERE uuid = %s ORDER BY time DESC"
     cursor.execute(query, (uuid,))
     device_cpu_temps = cursor.fetchall()
+    cursor.close()
     return {"cpu_temps": device_cpu_temps}
 
 
 @app.get("/cpu_freqs/{uuid}")
 def get_cpu_freqs(uuid: str):
-    global cursor
-    
+    connection = mysql.connector.connect(
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database,
+        port=mysql_port,
+    )
+    cursor = connection.cursor()
+
     query = "SELECT cpu_freq, time FROM gps_data WHERE uuid = %s ORDER BY time DESC"
     cursor.execute(query, (uuid,))
     device_cpu_freqs = cursor.fetchall()
+    cursor.close()
     return {"cpu_freqs": device_cpu_freqs}
+
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run("gps_api:app", port=5003, reload=True)
