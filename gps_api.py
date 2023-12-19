@@ -112,7 +112,7 @@ def get_tdop_data(uuid: str):
     )
     cursor = connection.cursor()
 
-    query = "SELECT tdop, time FROM gps_data WHERE uuid = %s ORDER BY time DESC"
+    query = "SELECT tdop, time FROM gps_data WHERE uuid = %s ORDER BY time ASC"
     cursor.execute(query, (uuid,))
     device_tdop_history = cursor.fetchall()
     cursor.close()
@@ -241,7 +241,7 @@ def get_cpu_temps(uuid: str):
     )
     cursor = connection.cursor()
 
-    query = "SELECT cpu_temp, time FROM gps_data WHERE uuid = %s ORDER BY time DESC"
+    query = "SELECT cpu_temp, time FROM gps_data WHERE uuid = %s ORDER BY time ASC"
     cursor.execute(query, (uuid,))
     device_cpu_temps = cursor.fetchall()
     cursor.close()
@@ -259,7 +259,7 @@ def get_cpu_freqs(uuid: str):
     )
     cursor = connection.cursor()
 
-    query = "SELECT cpu_freq, time FROM gps_data WHERE uuid = %s ORDER BY time DESC"
+    query = "SELECT cpu_freq, time FROM gps_data WHERE uuid = %s ORDER BY time ASC"
     cursor.execute(query, (uuid,))
     device_cpu_freqs = cursor.fetchall()
     cursor.close()

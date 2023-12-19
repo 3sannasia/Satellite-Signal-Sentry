@@ -1,0 +1,113 @@
+/* Link this CSS file in your HTML by using the following tag in the head section:
+<link rel="stylesheet" type="text/css" href="styles.css">
+*/
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #eaeaea; /* Fallback for older browsers */
+    background: -webkit-linear-gradient(to right, #eaeaea, #dbdbdb);
+    background: linear-gradient(to right, #eaeaea, #dbdbdb);
+    color: #333;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    background: #333;
+    background: -webkit-linear-gradient(to right, #dd5e89, #f7bb97);
+    background: linear-gradient(to right, #dd5e89, #f7bb97);
+    color: #fff;
+    padding: 20px 0;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+canvas {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 90%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 15px;
+}
+
+th {
+    background-color: #556270;
+    color: white;
+    letter-spacing: 1px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid #556270;
+}
+
+tbody tr:hover {
+    background-color: #f9ebeb;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        width: 95%;
+    }
+
+    table {
+        width: 95%;
+    }
+}
+
+/* Typography adjustments for small screens */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Add Google Font link in your HTML head before this stylesheet link */
+/* <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet"> */
+
