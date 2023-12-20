@@ -40,10 +40,10 @@ The report can be found in the REPORT.md file
 
 
 ## People
-- Akash Sannasi
-- Harshda Ghai
-- Ananya Agarwal
-- Vashishth Goswami
+- Akash Sannasi akashsan522@gmail.com
+- Harshda Ghai hghai2@illinois.edu
+- Ananya Agarwal ananyaa7@illinois.edu
+- Vashishth Goswami vgosw2@illinois.edu
 
 
 
