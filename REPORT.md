@@ -52,8 +52,7 @@ This is a semester long project for IE 421 - High Frequency Trading Technology i
 
 
 ## Goal
-Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy (TDOP) and satellite signal strength. Goal is also to figure out what is the ideal satellite combination depending on their respective positions using the TDOP and satellite signal strength metric.
-Show pic of working gps with satellites its using and their strengths
+Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy (TDOP) and satellite signal strength. Goal is also to figure out what is the ideal satellite combination depending on their respective positions using the TDOP and satellite signal strength metric. We want to determine which satellites at what positions cause the lowest time error measured by TDOP.
 
 
 
