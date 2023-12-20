@@ -1,28 +1,6 @@
 # Immersive 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them
 
-This repository holds scripts to pull GNSS and satellite data and store it in a datbabase for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many GNSS receivers can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.
-
-
-### Components:
-- Backend
-    - MySQL
-    - Python
-    - FastAPI
-- Frontend
-    - HTML/CSS
-    - JavaScript
-    - CesiumJS
-    - ChartJS
-
-
-## Goal
-Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy (TDOP) and satellite signal strength. Goal is also to figure out what is the ideal satellite combination depending on their respective positions using the TDOP and satellite signal strength metric.
-Show pic of working gps with satellites its using and their strengths
-
-## Description
-This is a semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere.
-
-## Teammates
+## Team
 Akash Sannasi
 - I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and backend/full-stack applications using that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
 
@@ -53,6 +31,30 @@ Vashishth Goswami
 You can reach me at: <br/>
 Email : vgosw2@illinois.edu <br/>
 LinkedIn: https://www.linkedin.com/in/vashishth8/ 
+
+
+## Project
+
+## Description
+This is a semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere. This repository holds scripts to pull GNSS and satellite data and store it in a datbabase for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many GNSS receivers can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.
+
+
+### Components:
+- Backend
+    - MySQL
+    - Python
+    - FastAPI
+- Frontend
+    - HTML/CSS
+    - JavaScript
+    - CesiumJS
+    - ChartJS
+
+
+## Goal
+Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy (TDOP) and satellite signal strength. Goal is also to figure out what is the ideal satellite combination depending on their respective positions using the TDOP and satellite signal strength metric.
+Show pic of working gps with satellites its using and their strengths
+
 
 
 ## Visuals
