@@ -147,6 +147,7 @@ Our goal is to show what your GNSS receiver is connected to behind-the-scenes an
 - Displays currently connected devices
 - On click you can see charts of that device's data, but does not live update unless you reclick
 - Needs asynchronous reloading and data fetching
+- Ublox support still in works and development stopped to work on other features (see ublox branch)
 
 
 
