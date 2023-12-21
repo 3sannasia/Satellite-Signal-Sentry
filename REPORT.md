@@ -131,19 +131,19 @@ To enhance accuracy, the receiver must account for various errors, such as atmos
 ### Data collected from the receiver
 ![gps_table](screenshots/gps_table.png)
 
-- *uuid*: Unique id to identify a device with a working gps receiver
+- *uuid*: Unique id to identify a device with a working gps receiver.
 - *time*: Number of satellites used in navigation solution.
 - *longitude*: Longitude in degrees: +/- signifies East/West.
 - *latitude*: Latitude in degrees: +/- signifies North/South.
-- *altitude*: altitude of the gps receiver
+- *altitude*: altitude of the gps receiver.
 - *mode*: NMEA mode: 0=unknown, 1=no fix, 2=2D, 3=3D.
 - *nSat*: Number of satellite objects in "satellites" array.
 - *uSat*: Number of satellites used in navigation solution.
 - *TDOP*: Time dilution of precision, a dimensionless factor which should be multiplied by a base UERE to get an error estimate. UERE is the user equivalent range error (UERE) which refers to the error of a component in the distance from receiver to a satellite.
 - *satellites*: List of satellite objects and thair data in skyview by the GNSS receiver
     - ![sat_list](screenshots/sat_list.png)
-- *cpu_temp*: cpu temperature of the device in Celsius
-- *cpu_freq*: cpu frequency of the device in Hz
+- *cpu_temp*: cpu temperature of the device in Celsius.
+- *cpu_freq*: cpu frequency of the device in Hz.
 
 See https://gpsd.gitlab.io/gpsd/gpsd_json.html for more in depth explanations
 
