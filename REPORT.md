@@ -178,6 +178,7 @@ To enhance accuracy, the receiver must account for various errors, such as atmos
 ### Features
 1. 3D Visualization of gps locations on the Earth
 2. Satellites orbitting the Earth in real-time
+    - Note: Satellite data before toggling show satellites used is from both sides of the earth is predefined orbit data. We are not getting any data about the satellite orbit from the gps chip, only info on what specific satellites the gps receiver is using.
 3. See what satellites your gps device is using
 4. Click on device location or name to be redirected to generated graphs of cpu-temp, cpu-freq, TDOP (time dilution of precision), and used satellite PRN and their satellite strengths
 ### Testing
@@ -233,6 +234,7 @@ To enhance accuracy, the receiver must account for various errors, such as atmos
 - On click you can see charts of that device's data, but does not live update unless you reclick
 - Needs asynchronous reloading and data fetching
 - Ublox support still in works and development stopped to work on other features (see ublox branch)
+
 
 
 
