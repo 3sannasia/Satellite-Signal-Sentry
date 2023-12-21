@@ -2,7 +2,7 @@
 
 ## Team
 Akash Sannasi
-- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and backend/full-stack applications using that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
+- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics graduating May 2025. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and backend/full-stack applications using that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
 
 You can reach me at: <br/>
 Gmail: akashsan522@gmail.com <br/>
