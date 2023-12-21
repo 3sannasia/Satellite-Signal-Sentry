@@ -2,7 +2,7 @@
 
 ## Team
 Akash Sannasi
-- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics graduating May 2025. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and backend/full-stack applications using that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
+- I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics graduating May 2025. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, cameras, microphones, etc.) and backend/full-stack applications powered by that data for low-code use cases. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
 
 You can reach me at: <br/>
 Gmail: akashsan522@gmail.com <br/>
@@ -49,6 +49,9 @@ This is a semester long project for IE 421 - High Frequency Trading Technology i
     - JavaScript
     - CesiumJS
     - ChartJS
+- Hardware
+    - HiLetgo NEO-7M GPS Satellite Positioning Module
+    - Rasberry Pi 4 (8GB)
 
 
 ## Goal
@@ -65,6 +68,85 @@ Our goal is to show what your GNSS receiver is connected to behind-the-scenes an
 ![docs](screenshots/docs.png)
 
 
+## Technical Details
+
+### What is GPS and GNSS?
+
+#### Global Positioning System (GPS):
+
+GPS is a satellite-based navigation system that enables users to determine their precise location and track movements on Earth. The system consists of a constellation of satellites orbiting the Earth, ground control stations, and GPS receivers. Here's how it works:
+ 
+1. Satellite Constellation: 
+The GPS constellation consists of a group of satellites that orbit the Earth.
+2. Triangulation: 
+The GPS receiver on the ground communicates with multiple satellites simultaneously. By measuring the distance (range) between the receiver and each satellite based on the time it takes for signals to travel, the receiver can calculate its exact location using a process called trilateration.
+3. Navigation Solution: 
+The GPS receiver processes the data received from the satellites and calculates the user's latitude, longitude, altitude, and sometimes velocity. This information provides accurate positioning anywhere on Earth.
+3. Time Synchronization: 
+Precise timing is crucial for GPS. The satellites and receivers synchronize their clocks, and the receiver uses the time delay of signals to determine the distance to each satellite.
+
+#### Global Navigation Satellite System (GNSS):
+
+GNSS is a more encompassing term that refers to a collection of satellite navigation systems beyond GPS. While GPS is a specific system developed by the United States, GNSS includes other systems developed by different countries or organizations. Examples include:
+
+1. GPS (United States): The most well-known and widely used system.
+2. GLONASS (Russia): A Russian satellite navigation system.
+3. Galileo (European Union): The European Union's global navigation system.
+4. BeiDou (China): The Chinese satellite navigation system.
+
+GNSS involves dealing with a diverse range of satellite signals, protocols, and data formats. GNSS receivers are designed to be compatible with multiple satellite constellations, and algorithms must be adaptable to handle signals from different systems, optimizing the use of available satellites to enhance accuracy and reliability.
+
+GPS is essentially specific satellite navigation system, and GNSS is the broader term that encompasses multiple global navigation systems, each contributing to the field of satellite-based positioning.
+
+#### How a satellite navigation receiver works
+Let's delve into the intricacies of how a satellite navigation receiver, such as a GPS receiver, utilizes signals from multiple satellites to calculate time, location, and other parameters from a computer science perspective.
+
+1. Signal Acquisition:
+
+When a GPS receiver is powered on, it starts by searching for signals from multiple satellites in view. Each satellite transmits signals containing information about its location and the current time.
+
+2. Time Synchronization:
+
+Accurate timekeeping is fundamental to GPS. The receiver needs to synchronize its clock with the clocks on the satellites. Each satellite signal includes a timestamp, and the receiver compares the arrival times of signals from different satellites to calculate the time delay or range to each satellite. Therefore, a GPS receiver uses more than one satellite, usually 4, to provide 3D location and accurate time data. 
+
+3. Trilateration:
+
+Trilateration is the mathematical technique used to determine the receiver's location. By knowing the distance (range) from the receiver to each satellite, the receiver can establish its position by finding the intersection point of spheres centered around each satellite. In a 2D scenario, this intersection point forms a circle; in 3D, it forms a sphere.
+
+
+4. Multilateration and Optimization:
+
+In practice, GPS receivers often use a technique called multilateration, which extends trilateration to incorporate measurements from more than three satellites. This helps compensate for additional sources of error and improves accuracy. Optimization algorithms, such as least squares estimation, are commonly used to find the best-fit position solution by minimizing the overall error.
+
+
+5. Continuous Tracking and Dynamic Solutions:
+
+GPS receivers continuously track signals from multiple satellites to update the position and refine the solution over time. In dynamic scenarios, where the receiver is in motion, algorithms must adapt to changes in velocity, acceleration, and environmental conditions. We hope to add environmental conditions in our project in the future to showcase how weather can affect TDOP and satellite signal strength. 
+
+
+6. Error Mitigation:
+
+To enhance accuracy, the receiver must account for various errors, such as atmospheric delays, clock inaccuracies, and geometric dilution of precision (GDOP). In our project we use the time dilution of precision (TDOP) to identify satellite combinations at certain positions that provide the lowest time error. 
+
+### Data collected from the receiver
+![gps_table](screenshots/gps_table.png)
+
+
+
+### Satellites and their Real-Time Orbits
+- We use pre-determined real-time data of a satellite's orbit using TLE data. 
+- A TLE is a data format encoding a list of orbital elements of an Earth-orbiting object for a given point in time.
+- CZML is a JSON format for describing a time-dynamic graphical scene, primarily for display in a web browser running Cesium.
+- We used the tle2czml library to return czml files to power our CesiumJS 3D visualization's real-time satellites orbits. 
+    -  https://github.com/kujosHeist/tle2czml 
+- The TLE data we used can be found on https://celestrak.org/NORAD/elements/
+
+- Example of TLE data
+![tle](screenshots/TLE.png)
+
+- After conversion to CZML data
+![tle](screenshots/CZML.png)
+
 ## Installation
 - Install Libraries: 
     - ```pip3 install -r requirements.txt```
@@ -78,8 +160,11 @@ Our goal is to show what your GNSS receiver is connected to behind-the-scenes an
 - Need a .env file with your mysql database credentials
 - Obtain device with a GNSS reciever with an active fix and running GPSD
 - On running the backend your device
-    - automatically registers itself to MySQL 
-    - uploads data to our MySQL instance
+    - automatically registers itself to MySQL as an active device
+    - ![gps_table](screenshots/register_table.png)
+    - uploads data to the gps_data table
+    - ![gps_table](screenshots/gps_table.png)
+
 - On shutting down the backend
     - device unregisters from active devices table on MySQL
     - device stays recorded in the connected_devices_history table

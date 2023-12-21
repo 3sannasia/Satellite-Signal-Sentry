@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REPORT.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="immersive-3d-visualization-unveiling-the-mystique-of-gnss-and-the-satellites-that-power-them">Immersive 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them</h1>
+<h2 id="team">Team</h2>
+<p>Akash Sannasi</p>
+<ul>
+<li>I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, RTSP cameras, microphones, etc.) and backend/full-stack applications using that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React.</li>
+</ul>
+<p>You can reach me at: <br/>
+Gmail: akashsan522@gmail.com <br/>
+LinkedIn: https://www.linkedin.com/in/-akash-s/</p>
+<p>Harshda Ghai</p>
+<ul>
+<li>I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science. I am graduating in May 2024, and have taken courses in Data Structures, System Programming, Database Management Systems, Artificial Intelligence, and IOT. I have previous internship experience working as a Software Engineering Intern for Mettl | Mercer and have worked in a startup for my previous internship. My skills include Python, Java, C++, SQL. My interest areas include - AI/ML Algorithms and IOT.</li>
+</ul>
+<p>You can reach me at: <br/>
+Email : hghai2@illinois.edu <br/>
+LinkedIn: https://www.linkedin.com/in/harshda-ghai-3853b3187</p>
+<p>Ananya Agarwal</p>
+<ul>
+<li>I am an undergraduate student studying Computer science at the University of Illinois at Urbana Champaign. I am going to graduate may 2024. I have
+taken courses in database Management systems, Artificial Intellifence, statistics for Computer Science, System programming,Algorithms and data structures and IOT. I have experince working as a software development intern at Tesla and Ericsson. My skills include python, Java, CSS, C#, HTML, Javascript, C++.</li>
+</ul>
+<p>You can reach me at: <br/>
+Linkedin : https://www.linkedin.com/in/ananya-agarwal-407196205/</p>
+<p>Vashishth Goswami</p>
+<ul>
+<li>I'm an undergrad student at the University of Illinois Urbana-Champaign, graduating in May 2024. I have taken courses like Intro. to Algorithms and models of computations, System Programming, Artificial Intelligence. I have worked for NASA Lunabotics Competition where I helped with automation and GUI interface for controls. My skills include Python, Java, C++, Ocaml. Following my interest in systems, I want to work in Cryptography, Architecture and Math.</li>
+</ul>
+<p>You can reach me at: <br/>
+Email : vgosw2@illinois.edu <br/>
+LinkedIn: https://www.linkedin.com/in/vashishth8/</p>
+<h2 id="project">Project</h2>
+<h2 id="description">Description</h2>
+<p>This is a semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere. This repository holds scripts to pull GNSS and satellite data and store it in a datbabase for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many GNSS receivers can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.</p>
+<h3 id="components">Components:</h3>
+<ul>
+<li>Backend
+<ul>
+<li>MySQL</li>
+<li>Python</li>
+<li>FastAPI</li>
+</ul>
+</li>
+<li>Frontend
+<ul>
+<li>HTML/CSS</li>
+<li>JavaScript</li>
+<li>CesiumJS</li>
+<li>ChartJS</li>
+</ul>
+</li>
+</ul>
+<h2 id="goal">Goal</h2>
+<p>Our goal is to show what your GNSS receiver is connected to behind-the-scenes and how satellite position can affect time accuracy (TDOP) and satellite signal strength. Goal is also to figure out what is the ideal satellite combination depending on their respective positions using the TDOP and satellite signal strength metric. We want to determine which satellites at what positions cause the lowest time error measured by TDOP.</p>
+<h2 id="visuals">Visuals</h2>
+<p><img src="file:///home/margpi/Desktop/group_04_project/screenshots/sats.png" alt="satellites">
+<img src="file:///home/margpi/Desktop/group_04_project/screenshots/used_sat.png" alt="used_satellites">
+<img src="file:///home/margpi/Desktop/group_04_project/screenshots/graphs.png" alt="graph">
+<img src="file:///home/margpi/Desktop/group_04_project/screenshots/graphs_p1.png" alt="graphs_1">
+<img src="file:///home/margpi/Desktop/group_04_project/screenshots/graphs_p2.png" alt="graphs_2">
+<img src="file:///home/margpi/Desktop/group_04_project/screenshots/docs.png" alt="docs"></p>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>Install Libraries:
+<ul>
+<li><code>pip3 install -r requirements.txt</code></li>
+</ul>
+</li>
+<li>Setup MySQL instance and .env file</li>
+<li>Run Database Setup file
+<ul>
+<li><code>python3 db_setup.py</code></li>
+</ul>
+</li>
+<li>Run Project (api service + GNSS receiver data collection + frontend)
+<ul>
+<li>run <code>./run_gps_api.sh</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<ul>
+<li>Need a .env file with your mysql database credentials</li>
+<li>Obtain device with a GNSS reciever with an active fix and running GPSD</li>
+<li>On running the backend your device
+<ul>
+<li>automatically registers itself to MySQL</li>
+<li>uploads data to our MySQL instance</li>
+</ul>
+</li>
+<li>On shutting down the backend
+<ul>
+<li>device unregisters from active devices table on MySQL</li>
+<li>device stays recorded in the connected_devices_history table</li>
+</ul>
+</li>
+<li>The CesiumJS frontend uses the data to populate the globe with device locations and satellites in real-time</li>
+<li>ChartJS charts are displayed
+<ul>
+<li>cpu temperatures over time</li>
+<li>cpu frequency over time</li>
+<li>TDOP (time dilution of precision) over time</li>
+<li>current satellite signal strength</li>
+</ul>
+</li>
+</ul>
+<h3 id="features">Features</h3>
+<ol>
+<li>3D Visualization of gps locations on the Earth</li>
+<li>Satellites orbitting the Earth in real-time</li>
+<li>See what satellites your gps device is using</li>
+<li>Click on device location or name to be redirected to generated graphs of cpu-temp, cpu-freq, TDOP (time dilution of precision), and used satellite PRN and their satellite strengths</li>
+</ol>
+<h3 id="testing">Testing</h3>
+<ul>
+<li>run <code>./run_gps_api.sh</code></li>
+<li>Navigate to the FastAPI docs <code>http://127.0.0.1:5003/docs</code></li>
+</ul>
+<h2 id="changes-from-project-proposal">Changes from Project Proposal</h2>
+<ul>
+<li>Initial plans of restricting GNSS and switch GNSS constellation automatically if massive spike in latency scrapped. This is because there is not an ideal way to measure latency other than using TDOP and satellite strength. We also realized the receiver automatically switches if necessary and ublox commands already exist to restrict GNSS constellations</li>
+<li>Research on whether latency is improved on just one satellite connected vs. multiple are connected at a time scrapped because we didn't have a good way of measuring latency</li>
+<li>Our focus changed to satellite signal strength and TDOP instead in regards to the importance of time in HFT</li>
+<li>Left out NATS to simplify data transfer between the frontend and backend to FastAPI</li>
+<li>Ublox already has a time mode for being able to make pis have a static location after 10 seconds (average locations) then turn off the location just for timestamp</li>
+</ul>
+<h2 id="support">Support</h2>
+<h4 id="installing-gpsd">Installing gpsd</h4>
+<ul>
+<li>https://gpsd.gitlab.io/gpsd/installation.html</li>
+</ul>
+<h4 id="satellite-data-that-can-be-read-through-nmea">Satellite data that can be read through NMEA</h4>
+<ul>
+<li>https://gpsd.gitlab.io/gpsd/gpsd_json.html</li>
+</ul>
+<h4 id="accessing-api-swagger-docs">Accessing api swagger docs</h4>
+<ul>
+<li>visit the api url + /docs</li>
+</ul>
+<h4 id="python-3-parser-for-the-ubx-%C2%A9-protocol-ubx-is-a-proprietary-binary-protocol-implemented-on-u-blox-%E2%84%A2-gnssgps-receiver-modules">Python 3 parser for the UBX © protocol. UBX is a proprietary binary protocol implemented on u-blox ™ GNSS/GPS receiver modules.</h4>
+<ul>
+<li>https://github.com/semuconsulting/pyubx2</li>
+</ul>
+<h4 id="setting-up-pi-mysql-instance">Setting up pi MySQL instance</h4>
+<ul>
+<li>https://pimylifeup.com/raspberry-pi-mysql/</li>
+</ul>
+<h4 id="tle-data-used-for-satellites">TLE Data used for Satellites</h4>
+<ul>
+<li>https://github.com/kujosHeist/tle2czml</li>
+</ul>
+<h2 id="roadmap-for-future-ideas">Roadmap for Future Ideas</h2>
+<ul>
+<li>Use tools like Prometheus, Grafana, or commercial monitoring solutions to gain insights into your system's health on the frontend</li>
+<li>Implement ublox command sending from the UI and see satellite changes in real time</li>
+<li>Time lapse slider to see satellite strength over time and when a device switches satellites</li>
+<li>Add airplanes</li>
+<li>Add radio waves</li>
+<li>data centers</li>
+<li>Adding testing for health data and to signal when a raspberry pi is down what to do</li>
+<li>Correlate satellites with their country, year made, and etc…</li>
+<li>Command to restrict a certain constellation through the UI using ublox commands</li>
+<li>local weather</li>
+<li>User notifications when satellite signal strength or TDOP is unideal</li>
+<li>Detect trucker GPS jamming and alert the user about latency issue</li>
+</ul>
+<h2 id="project-status">Project status</h2>
+<ul>
+<li>API/backend established with registering/inserting/fetching routes complete</li>
+<li>Local MySQL instance done</li>
+<li>Frontend includes all U.S. Satellites currently (31)</li>
+<li>Displays currently connected devices</li>
+<li>On click you can see charts of that device's data, but does not live update unless you reclick</li>
+<li>Needs asynchronous reloading and data fetching</li>
+<li>Ublox support still in works and development stopped to work on other features (see ublox branch)</li>
+</ul>
+
+</body>
+</html>
