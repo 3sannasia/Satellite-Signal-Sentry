@@ -1,7 +1,7 @@
 # Immersive 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them
 
 ## Team
-Akash Sannasi
+Akash Sannasi - Team Lead
 - I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics graduating May 2025. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, cameras, microphones, etc.) and backend/full-stack applications powered by that data for low-code use cases. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
 
 You can reach me at: <br/>
