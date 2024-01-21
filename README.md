@@ -1,4 +1,4 @@
-# Immersive 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them
+# GPS 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them
 
 ## Team
 Akash Sannasi - Team Lead
