@@ -1,4 +1,4 @@
-# GPS 3D Visualization: Unveiling the Mystique of GNSS and the Satellites that Power them
+# GPS-Satellite 3D Visualization: Finding Optimal Satellites and Positioning for Time Accuracy
 
 ## Team
 Akash Sannasi - Team Lead
