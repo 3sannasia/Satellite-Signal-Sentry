@@ -2,7 +2,8 @@
 
 <p align="center"> A 3D Geospatial Platform for Finding Optimal Satellites and Positioning for Time Accuracy </p>
 
-<p align="center"><img src="https://github.com/3sannasia/Satellite-Signal-Sentry/assets/54860072/0977f4b1-2ab0-451e-b691-6fcd0a200827" alt="logo" width="150px" /></p>
+<br>
+<p align="center"><img src="https://github.com/3sannasia/Satellite-Signal-Sentry/assets/54860072/0977f4b1-2ab0-451e-b691-6fcd0a200827" alt="logo" width="200px" /></p>
 
 ## Team
 
