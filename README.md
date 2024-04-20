@@ -1,4 +1,4 @@
-# GPS-Satellite 3D Visualization: Finding Optimal Satellites and Positioning for Time Accuracy
+# Satellite Signal Sentry: A 3D Geospatial Platform for Finding Optimal Satellites and Positioning for Time Accuracy
 
 ## Team
 Akash Sannasi - Team Lead
