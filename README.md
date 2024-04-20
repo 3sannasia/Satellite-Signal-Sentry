@@ -1,5 +1,7 @@
 # Satellite Signal Sentry: A 3D Geospatial Platform for Finding Optimal Satellites and Positioning for Time Accuracy
 
+<p align="center"><img src="https://github.com/3sannasia/VSCode-Extension-unix-to-utc/assets/54860072/94f63320-b1dd-48a8-9514-359b61b629b7" alt="logo" width="250px" /></p>
+
 ## Team
 Akash Sannasi - Team Lead
 - I'm an undergraduate student at the University of Illinois Urbana-Champaign studying Computer Science + Economics graduating May 2025. I've taken courses in database systems, applied machine learning, computer systems, and algorithms. I have previous internship experience in sensor data collection (GPS, cameras, microphones, etc.) and backend/full-stack applications powered by that data. My skills include being advanced at Python, C++, SQL, JavaScript, and React. 
