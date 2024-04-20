@@ -1,6 +1,6 @@
 # Satellite Signal Sentry: A 3D Geospatial Platform for Finding Optimal Satellites and Positioning for Time Accuracy
 
-<p align="center"><img src="https://github.com/3sannasia/VSCode-Extension-unix-to-utc/assets/54860072/94f63320-b1dd-48a8-9514-359b61b629b7" alt="logo" width="250px" /></p>
+<p align="center"><img src="https://github.com/3sannasia/Satellite-Signal-Sentry/assets/54860072/0977f4b1-2ab0-451e-b691-6fcd0a200827" alt="logo" width="200px" /></p>
 
 ## Team
 Akash Sannasi - Team Lead
