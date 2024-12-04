@@ -48,7 +48,7 @@ LinkedIn: https://www.linkedin.com/in/vashishth8/
 
 ## Description
 
-This is an open-source project started as semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere. This repository holds scripts to pull GNSS and satellite data and store it in a datbabase for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many GNSS receivers can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.
+This is an open-source project started as semester long project for IE 421 - High Frequency Trading Technology instructed by Professor David Lariviere. This repository holds scripts to pull GNSS and satellite data and store it in a database for historical data and currently active device data. It also has an API for the cesiumjs frontend to create the 3D visualization with live satellite orbits and the gps current location. Many GNSS receivers can be connected all over the world at the same time. You can see graphs in the frontend for device cpu temperatures and more.
 
 ### Components:
 
